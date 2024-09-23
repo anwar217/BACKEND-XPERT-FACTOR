@@ -36,12 +36,15 @@ public class IndividuRepository : IIndividuRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Individu>> GetIndividusWithRoleIndividuAsync()
-    {
-        return await _context.Individus
-            .Where(i => i.IndividuContrats.Any(ic => ic.Role != IndividuContrat.RoleType.Acheteur && ic.Role != IndividuContrat.RoleType.Adherent))
-            .ToListAsync();
-    }
+   public async Task<IEnumerable<Individu>> GetIndividusWithRoleIndividuAsync(int contratId)
+{
+  return await _context.Individus
+        .Where(i => !i.IndividuContrats.Any(
+            ic => ic.ContratId == contratId &&
+            (ic.Role == IndividuContrat.RoleType.Acheteur ||
+             ic.Role == IndividuContrat.RoleType.Adherent)))
+        .ToListAsync();
+}
 
     public async Task<Individu?> GetAdherentProfileAsync(int individuId)
     {
@@ -49,7 +52,8 @@ public class IndividuRepository : IIndividuRepository
             .Include(i => i.IndividuContrats)
             .Include(i => i.Factures)
             .FirstOrDefaultAsync(i => i.IndividuId == individuId &&
-                i.IndividuContrats.Any(ic => ic.Role == IndividuContrat.RoleType.Adherent));
+                i.IndividuContrats.Any(
+                    ic => ic.Role == IndividuContrat.RoleType.Adherent));
     }
 
     public async Task<bool> UpdateAdherentProfileAsync(Individu individu)

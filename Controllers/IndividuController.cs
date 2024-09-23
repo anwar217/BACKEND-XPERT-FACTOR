@@ -72,12 +72,12 @@ namespace factoring1.Controllers
             }
         }
 
-        [HttpGet("individusRoleIndividu")]
-        public async Task<IActionResult> GetIndividusWithRoleIndividu()
+        [HttpGet("individusRoleIndividu/{contratId}")]
+        public async Task<IActionResult> GetIndividusWithRoleIndividu(int contratId)
         {
             try
             {
-                var individus = await _individuService.GetIndividusWithRoleIndividuAsync();
+                var individus = await _individuService.GetIndividusWithRoleIndividuAsync( contratId);
                 return Ok(individus);
             }
             catch (Exception ex)

@@ -9,7 +9,7 @@ namespace factoring1.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] 
+ //   [Authorize] 
     public class ContratController : ControllerBase
     {
         private readonly IContratService _contratService;
@@ -25,12 +25,12 @@ namespace factoring1.Controllers
             try
             {
                 // Extract the IndividuId from the JWT token
-                var individuIdClaim = User.FindFirst(ClaimTypes.NameIdentifier) ?? User.FindFirst("id");
+                var individuIdClaim =  User.FindFirst("id");
                 if (individuIdClaim == null)
                 {
                     return Unauthorized("IndividuId not found in token.");
                 }
-
+            // await    Response.WriteAsJsonAsync(individuIdClaim.Value); 
                 int individuId = int.Parse(individuIdClaim.Value);
 
                 var contrats = await _contratService.GetContratsAdherentsByIndividuId(individuId);

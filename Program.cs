@@ -33,6 +33,7 @@ builder.Services.AddScoped<ILimiteRepository, LimiteRepository>();
 builder.Services.AddScoped<ILimiteService, LimiteService>();
 builder.Services.AddScoped<IFactureRepository, FactureRepository>();
 builder.Services.AddScoped<IFactureService, FactureService>();
+builder.Services.AddScoped<IDisponibleService, DisponibleService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddMemoryCache();
 
@@ -55,16 +56,19 @@ builder.Services.AddControllers()
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
-
+System.Diagnostics.Debug.WriteLine("secretKey*******************");
+System.Diagnostics.Debug.WriteLine(secretKey);
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options =>
-{
+{options.UseSecurityTokenValidators = true;
+
+
     options.TokenValidationParameters = new TokenValidationParameters
-    {
+    {  
         ValidateIssuer = false,
         ValidateAudience = false,
         ValidateLifetime = true,
@@ -107,9 +111,22 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder.WithOrigins("http://10.0.2.2:5000")
+                                 .AllowAnyHeader()
+                                 .AllowAnyMethod();
+                      });
+});
 var app = builder.Build();
 
+
+
+app.UseCors(MyAllowSpecificOrigins);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

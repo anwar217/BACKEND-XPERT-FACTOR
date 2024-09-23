@@ -6,7 +6,7 @@ public interface IIndividuRepository
 {
     Task<List<Individu>> GetAcheteursByContrat(int contratId,int adherantId);
     Task UpdateRolesToAcheteurAsync(IEnumerable<int> individuIds);
-    Task<IEnumerable<Individu>> GetIndividusWithRoleIndividuAsync();
+    Task<IEnumerable<Individu>> GetIndividusWithRoleIndividuAsync(int contratId);
     Task<Individu?> GetAdherentProfileAsync(int individuId);
     Task<bool> UpdateAdherentProfileAsync(Individu individu);
 

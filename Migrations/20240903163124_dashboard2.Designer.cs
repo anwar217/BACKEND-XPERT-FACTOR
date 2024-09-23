@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using factoring1.FrameworkEtDrivers;
 
@@ -11,9 +12,11 @@ using factoring1.FrameworkEtDrivers;
 namespace factoring1.Migrations
 {
     [DbContext(typeof(FactoringDbContext))]
-    partial class FactoringDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240903163124_dashboard2")]
+    partial class dashboard2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,9 +69,33 @@ namespace factoring1.Migrations
                     b.Property<DateTime>("DateSignContrat")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("DepassementLimiteFinancementAcheteursDisponible1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DepassementLimiteFinancementAcheteursDisponible2")
+                        .HasColumnType("int");
+
                     b.Property<string>("DeviceContrat")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int>("FactureEnCoursDisponible1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FactureEnCoursDisponible2")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FondsDeGarantiesDisponible1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FondsDeGarantiesDisponible2")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FondsDeReserveDisponible1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FondsDeReserveDisponible2")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("MontantContrat")
                         .HasColumnType("decimal(65,30)");
@@ -88,39 +115,6 @@ namespace factoring1.Migrations
                     b.HasKey("ContratId");
 
                     b.ToTable("Contrats");
-                });
-
-            modelBuilder.Entity("factoring1.Models.Disponible", b =>
-                {
-                    b.Property<int>("DisponibleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("DisponibleId"));
-
-                    b.Property<int>("ContratId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DepassementLimiteFinancementAcheteurs")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FactureEnCours")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FondsDeGaranties")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FondsDeReserve")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Formule")
-                        .HasColumnType("int");
-
-                    b.HasKey("DisponibleId");
-
-                    b.HasIndex("ContratId");
-
-                    b.ToTable("Disponibles");
                 });
 
             modelBuilder.Entity("factoring1.Models.Facture", b =>
@@ -379,17 +373,6 @@ namespace factoring1.Migrations
                     b.Navigation("Contrat");
                 });
 
-            modelBuilder.Entity("factoring1.Models.Disponible", b =>
-                {
-                    b.HasOne("factoring1.Models.Contrat", "Contrat")
-                        .WithMany("Disponibles")
-                        .HasForeignKey("ContratId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Contrat");
-                });
-
             modelBuilder.Entity("factoring1.Models.Facture", b =>
                 {
                     b.HasOne("factoring1.Models.Bordereau", "Bordereau")
@@ -504,8 +487,6 @@ namespace factoring1.Migrations
             modelBuilder.Entity("factoring1.Models.Contrat", b =>
                 {
                     b.Navigation("Bordereaux");
-
-                    b.Navigation("Disponibles");
 
                     b.Navigation("Factures");
 

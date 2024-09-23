@@ -102,7 +102,10 @@ namespace factoring1.Controllers
                 Nom = model.Nom,
                 Prenom = model.Prenom,
                 Email = model.Email,
-                Password = HashPassword(model.Password)
+                Password = HashPassword(model.Password),
+
+                NumberPhone = model.NumberPhone
+
             };
 
             await _context.Individus.AddAsync(user);
@@ -111,12 +114,13 @@ namespace factoring1.Controllers
             return Ok(new { message = "Registration successful" });
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+               return BadRequest(ModelState);
             }
 
             var user = await _context.Individus.FirstOrDefaultAsync(u => u.Email == model.Email);
@@ -127,7 +131,7 @@ namespace factoring1.Controllers
             }
 
             var token = _authService.GenerateJwtToken(user);
-            return Ok(new { message = "Login successful", token });
+            return Ok(new { message = "Login successful", token ,user});
         }
 
         [HttpGet("protected")]
@@ -160,6 +164,7 @@ namespace factoring1.Controllers
         public string Prenom { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string NumberPhone { get; set; }
     }
 
     public class LoginModel

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using factoring1.Models;
 using factoring1.Repositories;
-
+namespace factoring1.Services;
 public class IndividuService : IIndividuService
 {
     private readonly IIndividuRepository _individuRepository;
@@ -23,9 +23,9 @@ public class IndividuService : IIndividuService
         await _individuRepository.UpdateRolesToAcheteurAsync(individuIds);
     }
 
-    public async Task<IEnumerable<Individu>> GetIndividusWithRoleIndividuAsync()
+    public async Task<IEnumerable<Individu>> GetIndividusWithRoleIndividuAsync(int contratId)
     {
-        return await _individuRepository.GetIndividusWithRoleIndividuAsync();
+        return await _individuRepository.GetIndividusWithRoleIndividuAsync(contratId);
     }
 
     public async Task<Individu?> GetAdherentProfileAsync(int individuId)

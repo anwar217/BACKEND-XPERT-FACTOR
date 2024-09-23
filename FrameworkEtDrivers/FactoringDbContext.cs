@@ -18,6 +18,7 @@ namespace factoring1.FrameworkEtDrivers
         public DbSet<Litige> Litiges { get; set; }
         public DbSet<Prorogation> Prorogations { get; set; }
         public DbSet<Limite> Limites { get; set; }
+        public DbSet<Disponible> Disponibles { get; set; }
 
 
 
@@ -101,7 +102,10 @@ namespace factoring1.FrameworkEtDrivers
                .WithMany(c => c.Limites)
                .HasForeignKey(l => l.ContratId);
 
-
+modelBuilder.Entity<Disponible>()
+   .HasOne(D => D.Contrat)
+   .WithMany(c => c.Disponibles)
+   .HasForeignKey(D => D.ContratId);
             // Configure Disponible as owned entity types (if needed)
 
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace factoring1.Models
@@ -12,6 +13,7 @@ namespace factoring1.Models
 
         [Required]
         public decimal MontantContrat { get; set; }
+
         [Required]
         public string StatutContrat { get; set; }
 
@@ -35,7 +37,7 @@ namespace factoring1.Models
         public List<Prorogation>? Prorogations { get; set; } = new List<Prorogation>();
         public List<Limite>? Limites { get; set; } = new List<Limite>();
 
-
-
+        // Nouvelle propriété pour les disponibles
+        public List<Disponible>? Disponibles { get; set; } = new List<Disponible>();
     }
 }

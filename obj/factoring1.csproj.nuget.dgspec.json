@@ -1,28 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\acer\\source\\repos\\factoring1\\factoring1\\factoring1.csproj": {}
+    "C:\\Users\\honco\\OneDrive\\Bureau\\BACKEND-XPERT-FACTOR\\factoring1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\acer\\source\\repos\\factoring1\\factoring1\\factoring1.csproj": {
+    "C:\\Users\\honco\\OneDrive\\Bureau\\BACKEND-XPERT-FACTOR\\factoring1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\acer\\source\\repos\\factoring1\\factoring1\\factoring1.csproj",
+        "projectUniqueName": "C:\\Users\\honco\\OneDrive\\Bureau\\BACKEND-XPERT-FACTOR\\factoring1.csproj",
         "projectName": "factoring1",
-        "projectPath": "C:\\Users\\acer\\source\\repos\\factoring1\\factoring1\\factoring1.csproj",
-        "packagesPath": "C:\\Users\\acer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\acer\\source\\repos\\factoring1\\factoring1\\obj\\",
+        "projectPath": "C:\\Users\\honco\\OneDrive\\Bureau\\BACKEND-XPERT-FACTOR\\factoring1.csproj",
+        "packagesPath": "C:\\Users\\honco\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\honco\\OneDrive\\Bureau\\BACKEND-XPERT-FACTOR\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\honco\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -68,6 +65,10 @@
               "target": "Package",
               "version": "[8.0.0, )"
             },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
               "version": "[8.0.1, )"
@@ -108,7 +109,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

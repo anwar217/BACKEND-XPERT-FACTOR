@@ -22,9 +22,14 @@ namespace factoring1.Controllers
         [HttpPost]
         public async Task<IActionResult> AddBordereau([FromBody] Bordereau bordereau)
         {
+
+            Console.WriteLine("bordereau");
+            Console.WriteLine(bordereau.ToString());
             // Vérifier que le montant total du bordereau est égal à la somme des montants des factures
             var totalFactures = bordereau.Factures.Sum(f => f.MontantDocument);
-            if (bordereau.MontantTotal != totalFactures)
+            Console.WriteLine("totalFactures");
+             Console.WriteLine(totalFactures);
+            if (bordereau.MontantTotal != Math.Floor(totalFactures) )
             {
                 return BadRequest("Le montant total du bordereau doit être égal à la somme des montants des factures.");
             }
@@ -38,7 +43,7 @@ namespace factoring1.Controllers
             // Vérifier que chaque facture est liée à un individu dont le rôle est Adherent
             foreach (var facture in bordereau.Factures)
             {
-                var isAdherent = await _individuContratService.IsAdherent(facture.ContratId);
+                var isAdherent = await _individuContratService.IsAdherent(bordereau.ContratId);
                 if (!isAdherent)
                 {
                     return BadRequest($"La facture {facture.RefFacture} n'est pas liée à un individu dont le rôle est Adherent.");
