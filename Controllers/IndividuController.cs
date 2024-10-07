@@ -57,23 +57,23 @@ namespace factoring1.Controllers
             }
         }
 
-        [HttpPost("{contratId}/ajouter-acheteur")]
-        public async Task<IActionResult> AjouterAcheteurAuContrat(int contratId, int acheteurId)
+        [HttpPost("{contratId}/ajouter-acheteurs")]
+        public async Task<IActionResult> AjouterAcheteursAuContrat(int contratId, [FromBody] List<int> acheteurIds)
         {
             try
             {
                 // Récupérer l'ID de l'adhérent à partir du token JWT
                 var adherentId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")?.Value);
 
-                // Appeler le service pour ajouter un acheteur au contrat
-                var result = await _individuContratService.AjouterAcheteurAuContrat(adherentId, contratId, acheteurId);
+                // Appeler le service pour ajouter les acheteurs au contrat
+                var result = await _individuContratService.AjouterAcheteursAuContrat(adherentId, contratId, acheteurIds);
 
                 if (result)
                 {
-                    return Ok("Acheteur ajouté avec succès au contrat.");
+                    return Ok("Acheteurs ajoutés avec succès au contrat.");
                 }
 
-                return BadRequest("Erreur lors de l'ajout de l'acheteur.");
+                return BadRequest("Erreur lors de l'ajout des acheteurs.");
             }
             catch (UnauthorizedAccessException ex)
             {

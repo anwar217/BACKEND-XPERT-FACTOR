@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("factoring1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+34255824270f90e9759d690dddfb89f9862bc7a1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d56fad17d33630c49748e38d80383d3b78a83d30")]
 [assembly: System.Reflection.AssemblyProductAttribute("factoring1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("factoring1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
