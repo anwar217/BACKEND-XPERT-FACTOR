@@ -27,5 +27,18 @@ public class FactureController : ControllerBase
         }
 
         return Ok(factures);
+
+    }
+    [HttpGet("GetFacturesByAcheteur/{contratId}/{acheteurId}")]
+    public async Task<IActionResult> GetFacturesByAcheteur(int contratId, int acheteurId)
+    {
+        var factures = await _factureService.GetFacturesByAcheteurAndContratIdAsync(contratId, acheteurId);
+
+        if (factures == null || !factures.Any())
+        {
+            return NotFound();
+        }
+
+        return Ok(factures);
     }
 }

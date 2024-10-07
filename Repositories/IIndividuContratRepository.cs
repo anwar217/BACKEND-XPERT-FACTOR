@@ -6,5 +6,8 @@ namespace factoring1.Repositories
     public interface IIndividuContratRepository
     {
         Task<IndividuContrat> GetIndividuContratByContratId(int contratId);
+        Task<bool> EstProprietaireDuContrat(int adherentId, int contratId);
+        Task<bool> AcheteurDejaPresent(int contratId, int acheteurId);
+        Task AjouterIndividuContrat(IndividuContrat individuContrat);
     }
 }

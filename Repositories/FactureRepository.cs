@@ -22,5 +22,25 @@ namespace factoring1.Services
                 .Where(f => f.ContratId == contratId)
                 .ToListAsync();
         }
+
+        public async Task<List<Facture>> GetFacturesByAcheteurAndContratIdAsync(int contratId, int acheteurId)
+        {
+            // Check if the buyer has the specified contract
+            var acheteurContrat = await _context.IndividuContrats
+                .Where(ic => ic.ContratId == contratId && ic.IndividuId == acheteurId && ic.Role == IndividuContrat.RoleType.Acheteur)
+                .FirstOrDefaultAsync();
+
+            if (acheteurContrat == null)
+            {
+                return new List<Facture>(); // Return empty list if not found
+            }
+
+            // Retrieve invoices related to the contract and buyer
+            var factures = await _context.Factures
+                .Where(f => f.ContratId == contratId && f.IndividuId == acheteurId)
+                .ToListAsync();
+
+            return factures;
+        }
     }
 }

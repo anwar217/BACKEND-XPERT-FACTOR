@@ -18,5 +18,10 @@ namespace factoring1.Services
         {
             return await _factureRepository.GetFacturesByContratIdAsync(contratId);
         }
+
+        public async Task<List<Facture>> GetFacturesByAcheteurAndContratIdAsync(int contratId, int acheteurId)
+        {
+            return await _factureRepository.GetFacturesByAcheteurAndContratIdAsync(contratId, acheteurId);
+        }
     }
 }

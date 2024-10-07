@@ -14,10 +14,12 @@ namespace factoring1.Controllers
     public class IndividuController : ControllerBase
     {
         private readonly IIndividuService _individuService;
+        private readonly IIndividuContratService _individuContratService;
 
-        public IndividuController(IIndividuService individuService)
+        public IndividuController(IIndividuService individuService, IIndividuContratService individuContratService)
         {
             _individuService = individuService;
+            _individuContratService = individuContratService;
         }
 
         [HttpGet("acheteurs/contrat/{contratId}")]
@@ -55,6 +57,33 @@ namespace factoring1.Controllers
             }
         }
 
+        [HttpPost("{contratId}/ajouter-acheteur")]
+        public async Task<IActionResult> AjouterAcheteurAuContrat(int contratId, int acheteurId)
+        {
+            try
+            {
+                // Récupérer l'ID de l'adhérent à partir du token JWT
+                var adherentId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")?.Value);
+
+                // Appeler le service pour ajouter un acheteur au contrat
+                var result = await _individuContratService.AjouterAcheteurAuContrat(adherentId, contratId, acheteurId);
+
+                if (result)
+                {
+                    return Ok("Acheteur ajouté avec succès au contrat.");
+                }
+
+                return BadRequest("Erreur lors de l'ajout de l'acheteur.");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Forbid(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
 
 
