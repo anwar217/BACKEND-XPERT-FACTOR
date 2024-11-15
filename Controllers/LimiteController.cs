@@ -16,8 +16,8 @@ namespace factoring1.Controllers
             _limiteService = limiteService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddLimite(int contratId, Limite limite)
+        [HttpPost("{contratId}")]
+        public async Task<IActionResult> AddLimite(int contratId, [FromBody] Limite limite)
         {
             try
             {
@@ -29,5 +29,13 @@ namespace factoring1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("{contratId}/limites")]
+        public async Task<IActionResult> GetLimitesByContratId(int contratId)
+        {
+            var limites = await _limiteService.GetLimitesByContratIdAsync(contratId);
+            return Ok(limites);
+        }
+
     }
 }

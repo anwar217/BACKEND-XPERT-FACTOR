@@ -28,6 +28,8 @@ namespace factoring1.Models
 
         [Required]
         public DateTime DateDeFinancement { get; set; }
+        [Required]
+        public bool statut { get; set; }
 
         [Required]
         [StringLength(100)]

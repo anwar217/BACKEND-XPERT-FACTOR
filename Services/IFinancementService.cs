@@ -6,5 +6,8 @@ namespace factoring1.Services
     public interface IFinancementService
     {
         Task<Financement> AddFinancement(int individuId, Financement financement);
+        Task<List<Financement>> GetFinancementsByContratAndIndividuIdAsync(int contratId, int individuId);
+
+
     }
 }

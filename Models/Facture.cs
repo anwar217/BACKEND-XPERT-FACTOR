@@ -19,6 +19,7 @@ namespace factoring1.Models
 
         [Required]
         public int Echeance { get; set; }
+       
 
         [Required]
         public DateTime DateFacture { get; set; }

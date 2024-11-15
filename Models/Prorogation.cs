@@ -17,6 +17,8 @@ namespace factoring1.Models
         public DateTime Echeance { get; set; }
 
         public string MotifProrogation { get; set; }
+        [Required]
+        public bool statut { get; set; }
 
         [Required]
         public DateTime DateEcheanceApresProrogation { get; set; }

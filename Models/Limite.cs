@@ -10,16 +10,18 @@ namespace factoring1.Models
         public int Id { get; set; }
 
         [Required]
-        public DateTime DateDemande { get; set; }
+        public DateTime? DateDemande { get; set; }
 
         [Required]
         public decimal LimiteAssurance { get; set; }
 
         [Required]
         public decimal LimiteFinancement { get; set; }
+        [Required]
+        public bool statut { get; set; }
 
         [Required]
-        public DateTime DateLimite { get; set; }
+        public DateTime? DateLimite { get; set; }
 
         public DateTime? DateDerniereDemande { get; set; }
 

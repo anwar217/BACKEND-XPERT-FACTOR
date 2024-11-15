@@ -43,5 +43,34 @@ namespace factoring1.Controllers
                 return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
             }
         }
+        [HttpGet("contrat/{contratId}")]
+        public async Task<IActionResult> GetFinancementsByContratId(int contratId)
+        {
+            try
+            {
+                // Extraire l'IndividuId depuis le JWT de l'utilisateur connecté
+                var individuIdClaim = User.FindFirst("id");
+                if (individuIdClaim == null)
+                {
+                    return Unauthorized("Utilisateur non authentifié.");
+                }
+
+                int individuId = int.Parse(individuIdClaim.Value);
+
+                // Récupérer les financements pour l'IndividuId et le ContratId spécifiés
+                var financements = await _financementService.GetFinancementsByContratAndIndividuIdAsync(contratId, individuId);
+
+                if (financements == null || financements.Count == 0)
+                {
+                    return NotFound($"Aucun financement trouvé pour le contrat ID {contratId} et l'utilisateur connecté.");
+                }
+
+                return Ok(financements);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
+            }
+        }
     }
 }

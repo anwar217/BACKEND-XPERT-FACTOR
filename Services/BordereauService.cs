@@ -29,5 +29,9 @@ namespace factoring1.Services
 
             return await _bordereauRepository.AddBordereauAsync(bordereau);
         }
+        public async Task<List<Bordereau>> GetBordereauxByContratAndIndividuAsync(int contratId, int individuId)
+        {
+            return await _bordereauRepository.GetBordereauxByContratAndIndividuAsync(contratId, individuId);
+        }
     }
 }

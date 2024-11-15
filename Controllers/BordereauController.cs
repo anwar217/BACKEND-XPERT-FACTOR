@@ -60,5 +60,28 @@ namespace factoring1.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        [HttpGet("contrat/{contratId}")]
+        public async Task<IActionResult> GetBordereauxByContratId(int contratId)
+        {
+            // Récupération de l'IndividuId depuis le token JWT
+            var individuIdClaim = User.FindFirst("id");
+            if (individuIdClaim == null)
+            {
+                return Unauthorized("IndividuId not found in token.");
+            }
+
+            int individuId = int.Parse(individuIdClaim.Value);
+
+            // Appel du service pour récupérer les bordereaux pour cet utilisateur et ce contrat
+            var bordereaux = await _bordereauService.GetBordereauxByContratAndIndividuAsync(contratId, individuId);
+
+            if (bordereaux == null || bordereaux.Count == 0)
+            {
+                return NotFound($"Aucun bordereau trouvé pour le contrat ID {contratId} et l'utilisateur connecté.");
+            }
+
+            return Ok(bordereaux);
+        }
     }
 }

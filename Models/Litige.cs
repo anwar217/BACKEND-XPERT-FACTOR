@@ -16,6 +16,8 @@ namespace factoring1.Models
 
         [Required]
         public DateTime DateLitige { get; set; }
+        [Required]
+        public bool statut { get; set; }
 
         [Required]
         public DateTime DateEcheanceLitige { get; set; }

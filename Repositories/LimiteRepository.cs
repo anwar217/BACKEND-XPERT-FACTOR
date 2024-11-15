@@ -24,6 +24,11 @@ namespace factoring1.Repositories
         {
             return await _context.Contrats.FindAsync(contratId);
         }
-
+        public async Task<IEnumerable<Limite>> GetLimitesByContratIdAsync(int contratId)
+        {
+            return await _context.Limites
+                                 .Where(l => l.ContratId == contratId)
+                                 .ToListAsync();
+        }
     }
 }

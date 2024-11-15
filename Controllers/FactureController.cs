@@ -32,11 +32,12 @@ public class FactureController : ControllerBase
     [HttpGet("GetFacturesByAcheteur/{contratId}/{acheteurId}")]
     public async Task<IActionResult> GetFacturesByAcheteur(int contratId, int acheteurId)
     {
+        var emptyFacture=  Array.Empty<Facture>();
         var factures = await _factureService.GetFacturesByAcheteurAndContratIdAsync(contratId, acheteurId);
 
         if (factures == null || !factures.Any())
         {
-            return NotFound();
+            return Ok( emptyFacture);
         }
 
         return Ok(factures);

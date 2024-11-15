@@ -16,6 +16,8 @@ namespace factoring1.Models
 
         [Required]
         public DateTime DateBordereau { get; set; }
+        [Required]
+        public bool statut { get; set; }
 
         [Required]
         public int NombreDocuments { get; set; }

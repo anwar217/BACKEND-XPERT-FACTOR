@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using factoring1.FrameworkEtDrivers;
 
@@ -11,9 +12,11 @@ using factoring1.FrameworkEtDrivers;
 namespace factoring1.Migrations
 {
     [DbContext(typeof(FactoringDbContext))]
-    partial class FactoringDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241105122945_latestModificationnn")]
+    partial class latestModificationnn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,9 +47,6 @@ namespace factoring1.Migrations
 
                     b.Property<int>("NombreDocuments")
                         .HasColumnType("int");
-
-                    b.Property<bool>("statut")
-                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("BordereauId");
 
@@ -199,9 +199,6 @@ namespace factoring1.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("statut")
-                        .HasColumnType("tinyint(1)");
-
                     b.HasKey("FinancementId");
 
                     b.HasIndex("ContratId");
@@ -272,15 +269,13 @@ namespace factoring1.Migrations
                     b.Property<int>("ContratId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DateDemande")
-                        .IsRequired()
+                    b.Property<DateTime>("DateDemande")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime?>("DateDerniereDemande")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime?>("DateLimite")
-                        .IsRequired()
+                    b.Property<DateTime>("DateLimite")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("DelaiDemande")
@@ -296,9 +291,6 @@ namespace factoring1.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
-
-                    b.Property<bool>("statut")
-                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 
@@ -331,9 +323,6 @@ namespace factoring1.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
-
-                    b.Property<bool>("statut")
-                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("LitigeId");
 
@@ -372,9 +361,6 @@ namespace factoring1.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
-
-                    b.Property<bool>("statut")
-                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("ProrogationId");
 
