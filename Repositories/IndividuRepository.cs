@@ -75,7 +75,7 @@ public class IndividuRepository : IIndividuRepository
         return await _context.Individus
                              .FirstOrDefaultAsync(i => i.IndividuId == individuId);
     }
-    public async Task<List<Individu>> GetAllIndividusWithRelationsAsync()
+    public async Task<List<Individu>> GetAllIndividus()
     {
         return await _context.Individus
             .Include(i => i.IndividuContrats)
