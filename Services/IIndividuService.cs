@@ -10,6 +10,7 @@ public interface IIndividuService
     Task<Individu?> GetAdherentProfileAsync(int individuId);
     Task<bool> UpdateAdherentProfileAsync(Individu individu);
     Task<Individu> CreateIndividuAsync(Individu individu);
+    Task<List<Individu>> GetAllIndividus();
 
 
 

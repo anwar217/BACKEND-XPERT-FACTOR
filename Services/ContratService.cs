@@ -87,6 +87,10 @@ namespace factoring1.Services
 
             return contrat; // Retourner le contrat créé
         }
+        public async Task<List<Contrat>> GetAllContratsAsync()
+        {
+            return await _contratRepository.GetAllContratsAsync();
+        }
 
     }
 

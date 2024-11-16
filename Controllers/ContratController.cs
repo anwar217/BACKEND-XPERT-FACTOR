@@ -51,6 +51,13 @@ namespace factoring1.Controllers
                 return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
             }
         }
+        [HttpGet("contrats")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllContrats()
+        {
+            var contrats = await _contratService.GetAllContratsAsync();
+            return Ok(contrats);
+        }
 
     }
 }

@@ -45,4 +45,10 @@ public class IndividuService : IIndividuService
         // Vous renvoyez l'individu créé
         return createdIndividu;
     }
+
+    public async Task<List<Individu>> GetAllIndividus()
+    {
+        return await _individuRepository.GetAllIndividus();
+    }
+
 }

@@ -62,7 +62,18 @@ namespace factoring1.Repositories
 
             return existingContrat; // Retourner le contrat existant
         }
-
+        public async Task<List<Contrat>> GetAllContratsAsync()
+        {
+            return await _context.Contrats
+                .Include(c => c.IndividuContrats)
+                    .ThenInclude(ic => ic.Individu)
+                .Include(c => c.Factures)
+                .Include(c => c.Financements)
+                .Include(c => c.Limites)
+                .Include(c => c.Litiges)
+                .Include(c => c.Prorogations)
+                .ToListAsync();
+        }
     }
 }
 

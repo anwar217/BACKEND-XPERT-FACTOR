@@ -15,11 +15,13 @@ namespace factoring1.Controllers
     {
         private readonly IIndividuService _individuService;
         private readonly IIndividuContratService _individuContratService;
+        private readonly IIndividuRepository _individuRepository;
 
-        public IndividuController(IIndividuService individuService, IIndividuContratService individuContratService)
+        public IndividuController(IIndividuService individuService, IIndividuContratService individuContratService, IIndividuRepository individuRepository)
         {
             _individuService = individuService;
             _individuContratService = individuContratService;
+            _individuRepository = individuRepository;
         }
 
         [HttpGet("acheteurs/contrat/{contratId}")]
@@ -171,6 +173,27 @@ namespace factoring1.Controllers
             return BadRequest("Unable to add Individu."); // En cas d'erreur
         }
 
+
+        [HttpGet("individus")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllIndividus()
+        {
+            var individus = await _individuService.GetAllIndividus();
+            return Ok(individus);
+        }
+
+        // Récupérer un individu spécifique avec ses relations
+        [HttpGet("individus/{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetIndividuById(int id)
+        {
+            var individu = await _individuRepository.GetIndividuByIdAsync(id);
+            if (individu == null)
+            {
+                return NotFound();
+            }
+            return Ok(individu);
+        }
     }
 }
 

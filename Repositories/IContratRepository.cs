@@ -11,7 +11,7 @@ namespace factoring1.Repositories
 
         Task<bool> IsIndividuAdherentForContrat(int individuId, int contratId);
         Task<Contrat> AddContratForIndividuAsync(int contratId, int individuId);
-
+        Task<List<Contrat>> GetAllContratsAsync();
 
     }
 }

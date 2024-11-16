@@ -11,6 +11,7 @@ public interface IIndividuRepository
     Task<bool> UpdateAdherentProfileAsync(Individu individu);
     Task<Individu> AddIndividuAsync(Individu individu);
     Task<Individu> GetIndividuByIdAsync(int individuId);
+    Task<List<Individu>> GetAllIndividus();
 
 
 
