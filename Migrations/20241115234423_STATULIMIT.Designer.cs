@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using factoring1.FrameworkEtDrivers;
 
@@ -11,9 +12,11 @@ using factoring1.FrameworkEtDrivers;
 namespace factoring1.Migrations
 {
     [DbContext(typeof(FactoringDbContext))]
-    partial class FactoringDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241115234423_STATULIMIT")]
+    partial class STATULIMIT
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,9 +225,6 @@ namespace factoring1.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Nom")
                         .IsRequired()

@@ -30,10 +30,22 @@ namespace factoring1.Controllers
             }
         }
 
-        [HttpGet("{contratId}/limites")]
+        [HttpGet("contrat/{contratId}")]
         public async Task<IActionResult> GetLimitesByContratId(int contratId)
         {
-            var limites = await _limiteService.GetLimitesByContratIdAsync(contratId);
+            var individuIdClaim = User.FindFirst("id");
+            if (individuIdClaim == null)
+            {
+                return Unauthorized("IndividuId not found in token.");
+            }
+
+            int individuId = int.Parse(individuIdClaim.Value);
+
+            var limites = await _limiteService.GetLimitesByContratIdAsync(contratId,individuId);
+            if (limites == null )
+            {
+                return NotFound($"Aucun limite trouvé pour le contrat ID {contratId} et l'utilisateur connecté.");
+            }
             return Ok(limites);
         }
 

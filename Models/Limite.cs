@@ -18,7 +18,7 @@ namespace factoring1.Models
         [Required]
         public decimal LimiteFinancement { get; set; }
         [Required]
-        public bool statut { get; set; }
+        public StatusLimit statut { get; set; }
 
         [Required]
         public DateTime? DateLimite { get; set; }
@@ -33,6 +33,12 @@ namespace factoring1.Models
         public string ModePaiement { get; set; }
         public int ContratId { get; set; }
         public Contrat? Contrat { get; set; }
+        public enum StatusLimit
+        {
+            Approuved,
+            Rejected,
+            Pending
+        }
 
     }
 }

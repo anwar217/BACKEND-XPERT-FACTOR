@@ -17,7 +17,7 @@ namespace factoring1.Models
         [Required]
         public DateTime DateBordereau { get; set; }
         [Required]
-        public bool statut { get; set; }
+        public StatusBordereau Statut { get; set; }
 
         [Required]
         public int NombreDocuments { get; set; }
@@ -30,5 +30,13 @@ namespace factoring1.Models
 
         public List<Facture>? Factures { get; set; } = new List<Facture>();
 
+        public enum StatusBordereau
+        {
+            Approuved,
+            Rejected,
+            Pending
+        }
     }
+
+
 }

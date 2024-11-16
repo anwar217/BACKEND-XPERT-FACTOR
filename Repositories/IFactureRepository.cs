@@ -6,6 +6,7 @@ namespace factoring1.Repositories
     {
         Task<List<Facture>> GetFacturesByContratIdAsync(int contratId);
         Task<List<Facture>> GetFacturesByAcheteurAndContratIdAsync(int contratId, int acheteurId);
+        Task<List<Facture>> GetFacturesByBordereau(int contratId, int bordereauId,int individuId);
 
     }
 }

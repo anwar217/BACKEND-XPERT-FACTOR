@@ -154,6 +154,23 @@ namespace factoring1.Controllers
 
             return NoContent();
         }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateIndividu([FromBody] Individu individu)
+        {
+            if (individu == null)
+            {
+                return BadRequest("Individu is null.");
+            }
+
+            var result = await _individuService.CreateIndividuAsync(individu);
+            if (result != null)
+            {
+                return Ok(result); // Retourne l'individu créé avec un statut 200 OK
+            }
+            return BadRequest("Unable to add Individu."); // En cas d'erreur
+        }
+
     }
 }
 

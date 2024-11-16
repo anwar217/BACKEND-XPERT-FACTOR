@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using factoring1.FrameworkEtDrivers;
 
@@ -11,9 +12,11 @@ using factoring1.FrameworkEtDrivers;
 namespace factoring1.Migrations
 {
     [DbContext(typeof(FactoringDbContext))]
-    partial class FactoringDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241116131708_RoleAdminIndividu")]
+    partial class RoleAdminIndividu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -42,5 +42,16 @@ namespace factoring1.Services
 
             return factures;
         }
+
+        public async Task<List<Facture>> GetFacturesByBordereau(int contratId, int bordereauId, int individuId)
+        {
+            // Vérifier si l'individu possède bien le contrat spécifié
+            var factures = await _context.Factures
+          .Where(f => f.ContratId == contratId && f.BordereauId == bordereauId && f.IndividuId == individuId)
+          .ToListAsync();
+
+            return factures;
+        }
+
     }
 }

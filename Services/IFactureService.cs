@@ -7,5 +7,6 @@ namespace factoring1.Services
         Task<List<Facture>> GetFacturesByContratIdAsync(int contratId);
         Task<List<Facture>> GetFacturesByAcheteurAndContratIdAsync(int contratId, int acheteurId);
 
+        Task<List<Facture>> GetFacturesByBorderau(int contratId, int bordereauId,int individuId );
     }
 }

@@ -19,6 +19,8 @@ namespace factoring1.Models
         public string Password { get; set; }
 
         public string NumberPhone { get; set; }
+        public bool IsAdmin { get; set; } = false;
+
 
 
 

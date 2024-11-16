@@ -51,6 +51,18 @@ namespace factoring1.FrameworkEtDrivers
                 .WithMany(c => c.Bordereaux)
                 .HasForeignKey(b => b.ContratId);
 
+            modelBuilder.Entity<Bordereau>()
+              .Property(ic => ic.Statut)
+              .HasConversion(
+                  v => v.ToString(),
+                  v => (Bordereau.StatusBordereau)Enum.Parse(typeof(Bordereau.StatusBordereau), v));
+
+            modelBuilder.Entity<Limite>()
+               .Property(ic => ic.statut)
+               .HasConversion(
+                   v => v.ToString(),
+                   v => (Limite.StatusLimit)Enum.Parse(typeof(Limite.StatusLimit), v));
+
             // Configure Facture relationships
             modelBuilder.Entity<Facture>()
                 .HasOne(f => f.Bordereau)
@@ -86,6 +98,17 @@ namespace factoring1.FrameworkEtDrivers
              .HasConversion(
                  v => v.ToString(),
                  v => (TypeDeFinancement)Enum.Parse(typeof(TypeDeFinancement), v));
+
+       
+            modelBuilder.Entity<Financement>()
+      .Property(f => f.StatutFinancement)
+      .HasConversion(
+          v => v.ToString(),
+          v => (StatutFinancement)Enum.Parse(typeof(StatutFinancement), v)
+      );
+
+
+
 
             modelBuilder.Entity<Litige>()
                .HasOne(l => l.Contrat)

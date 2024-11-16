@@ -37,5 +37,8 @@ public class IndividuService : IIndividuService
     {
         return await _individuRepository.UpdateAdherentProfileAsync(individu);
     }
-
+    public async Task CreateIndividuAsync(Individu individu)
+    {
+        await _individuRepository.AddAsync(individu);
+    }
 }

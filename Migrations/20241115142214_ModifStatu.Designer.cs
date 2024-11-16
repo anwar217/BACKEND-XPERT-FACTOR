@@ -12,8 +12,8 @@ using factoring1.FrameworkEtDrivers;
 namespace factoring1.Migrations
 {
     [DbContext(typeof(FactoringDbContext))]
-    [Migration("20241114000028_addStatus")]
-    partial class addStatus
+    [Migration("20241115142214_ModifStatu")]
+    partial class ModifStatu
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,8 +48,8 @@ namespace factoring1.Migrations
                     b.Property<int>("NombreDocuments")
                         .HasColumnType("int");
 
-                    b.Property<bool>("statut")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<int>("Statut")
+                        .HasColumnType("int");
 
                     b.HasKey("BordereauId");
 

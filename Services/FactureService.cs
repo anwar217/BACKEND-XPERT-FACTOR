@@ -23,5 +23,9 @@ namespace factoring1.Services
         {
             return await _factureRepository.GetFacturesByAcheteurAndContratIdAsync(contratId, acheteurId);
         }
+        public async Task<List<Facture>> GetFacturesByBorderau(int contratId, int bordereauId,int individuId)
+        {
+            return await _factureRepository.GetFacturesByBordereau(contratId, bordereauId,individuId);
+        }
     }
 }

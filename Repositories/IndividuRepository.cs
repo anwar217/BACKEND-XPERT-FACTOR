@@ -62,5 +62,11 @@ public class IndividuRepository : IIndividuRepository
         return await _context.SaveChangesAsync() > 0;
     }
 
+    public async Task AddAsync(Individu individu)
+    {
+        _context.Individus.Add(individu);
+        await _context.SaveChangesAsync();
+    }
+
 
 }
