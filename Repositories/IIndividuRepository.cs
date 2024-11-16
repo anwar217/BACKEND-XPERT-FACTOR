@@ -9,7 +9,9 @@ public interface IIndividuRepository
     Task<IEnumerable<Individu>> GetIndividusWithRoleIndividuAsync(int contratId);
     Task<Individu?> GetAdherentProfileAsync(int individuId);
     Task<bool> UpdateAdherentProfileAsync(Individu individu);
-    Task AddAsync(Individu individu);
+    Task<Individu> AddIndividuAsync(Individu individu);
+    Task<Individu> GetIndividuByIdAsync(int individuId);
+
 
 
 

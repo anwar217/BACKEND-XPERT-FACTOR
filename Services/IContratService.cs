@@ -9,7 +9,6 @@ namespace factoring1.Services
         Task<List<Contrat>> GetContratsAdherentsByIndividuId(int individuId);
         Task<List<Contrat>> GetContratsByIndividuId(int individuId);
         Task<Contrat> GetContratByIndividuIdAndContratId(int individuId, int contratId);
-
-        // Autres méthodes de service
+        Task<Contrat> AddContratToAdherentAsync(int individuId, Contrat contrat)
     }
 }

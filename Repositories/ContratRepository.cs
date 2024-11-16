@@ -37,5 +37,31 @@ namespace factoring1.Repositories
             return await _context.IndividuContrats
                 .AnyAsync(ic => ic.IndividuId == individuId && ic.ContratId == contratId && ic.Role == IndividuContrat.RoleType.Adherent);
         }
+
+        public async Task<Contrat> AddContratForIndividuAsync(int individuId, Contrat contrat)
+        {
+            // Vérifier si le contrat existe
+            var existingContrat = await _context.Contrats
+                .FirstOrDefaultAsync(c => c.ContratId == contrat.ContratId);
+            if (existingContrat == null)
+            {
+                throw new ArgumentException("Le contrat n'existe pas.");
+            }
+
+            // Créer une association entre l'adhérent et le contrat
+            var individuContrat = new IndividuContrat
+            {
+                IndividuId = individuId,
+                ContratId = contrat.ContratId,
+                Role = IndividuContrat.RoleType.Adherent
+            };
+
+            // Ajouter l'association à la base de données
+            _context.IndividuContrats.Add(individuContrat);
+            await _context.SaveChangesAsync();
+
+            return contrat; // Retourner le contrat
+        }
     }
+}
 }

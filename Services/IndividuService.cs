@@ -37,8 +37,12 @@ public class IndividuService : IIndividuService
     {
         return await _individuRepository.UpdateAdherentProfileAsync(individu);
     }
-    public async Task CreateIndividuAsync(Individu individu)
+    public async Task<Individu> CreateIndividuAsync(Individu individu)
     {
-        await _individuRepository.AddAsync(individu);
+        // Vous ajoutez l'individu à la base de données
+        var createdIndividu = await _individuRepository.AddIndividuAsync(individu);
+
+        // Vous renvoyez l'individu créé
+        return createdIndividu;
     }
 }
