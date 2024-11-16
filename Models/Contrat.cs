@@ -24,10 +24,19 @@ namespace factoring1.Models
         public string DeviceContrat { get; set; }
 
         [Required]
+        public string FondGarantie { get; set; } = "20%";
+
+        [Required]
+        public string FraisCreation { get; set; } = "100TND";
+        [Required]
+        public string FraisLimite { get; set; } = "50TND";
+
+        [Required]
         public DateTime DateDebContrat { get; set; }
 
         [Required]
         public DateTime DateSignContrat { get; set; }
+
 
         public List<IndividuContrat>? IndividuContrats { get; set; } = new List<IndividuContrat>();
         public List<Bordereau>? Bordereaux { get; set; } = new List<Bordereau>();
