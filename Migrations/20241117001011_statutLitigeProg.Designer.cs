@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using factoring1.FrameworkEtDrivers;
 
@@ -11,9 +12,11 @@ using factoring1.FrameworkEtDrivers;
 namespace factoring1.Migrations
 {
     [DbContext(typeof(FactoringDbContext))]
-    partial class FactoringDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241117001011_statutLitigeProg")]
+    partial class statutLitigeProg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -386,6 +389,11 @@ namespace factoring1.Migrations
                     b.Property<string>("MotifProrogation")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("TypeProrogation")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("statut")
                         .IsRequired()

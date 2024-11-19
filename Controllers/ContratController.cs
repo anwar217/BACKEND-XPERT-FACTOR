@@ -9,14 +9,16 @@ namespace factoring1.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
- //   [Authorize] 
+ [Authorize] 
     public class ContratController : ControllerBase
     {
         private readonly IContratService _contratService;
+        private readonly CalculContrat _calculContrat;
 
-        public ContratController(IContratService contratService)
+        public ContratController(IContratService contratService,CalculContrat calculContrat)
         {
             _contratService = contratService;
+            _calculContrat = calculContrat;
         }
 
         [HttpGet("adherents/contrats")]
@@ -51,13 +53,34 @@ namespace factoring1.Controllers
                 return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
             }
         }
-        [HttpGet("contrats")]
+       /* [HttpGet("contrats")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllContrats()
         {
             var contrats = await _contratService.GetAllContratsAsync();
             return Ok(contrats);
-        }
+        }*/
 
+        [HttpGet("montant/{contratId}")]
+        public async Task<IActionResult> GetMontantTotalApprouve(int contratId)
+        {
+            try
+            {
+                // Extract the IndividuId from the JWT token
+                var individuIdClaim = User.FindFirst("id");
+                if (individuIdClaim == null)
+                {
+                    return Unauthorized("IndividuId not found in token.");
+                }
+                // await    Response.WriteAsJsonAsync(individuIdClaim.Value); 
+                int individuId = int.Parse(individuIdClaim.Value);
+                var totalMontantApprouve = await _calculContrat.CalculerMontantTotalApprouveAsync(contratId);
+                return Ok(new { ContratId = contratId, MontantTotalApprouve = totalMontantApprouve });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Erreur lors du calcul du montant total approuvé", Erreur = ex.Message });
+            }
+        }
     }
 }

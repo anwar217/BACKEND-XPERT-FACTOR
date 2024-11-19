@@ -32,12 +32,12 @@ namespace factoring1.Controllers
 
         [HttpPost("request-password-reset")]
         public async Task<IActionResult> RequestPasswordReset([FromBody] PasswordResetRequestModel model)
-           
+
         {
             var PhoneNumber = model.PhoneNumber.Substring(model.PhoneNumber.Length - 8);
-            var universalPhoneNumber1= "+216"+PhoneNumber;
-            var universalPhoneNumber2="00216"+PhoneNumber;
-            var user = await _context.Individus.FirstOrDefaultAsync(u => u.NumberPhone == PhoneNumber || u.NumberPhone== universalPhoneNumber1 ||u.NumberPhone== universalPhoneNumber2);
+            var universalPhoneNumber1 = "+216" + PhoneNumber;
+            var universalPhoneNumber2 = "00216" + PhoneNumber;
+            var user = await _context.Individus.FirstOrDefaultAsync(u => u.NumberPhone == PhoneNumber || u.NumberPhone == universalPhoneNumber1 || u.NumberPhone == universalPhoneNumber2);
 
             if (user == null)
             {
@@ -53,9 +53,9 @@ namespace factoring1.Controllers
             });
 
             PhoneNumber = "+216" + PhoneNumber;
-           await _smsService.SendSmsAsync(PhoneNumber, $"Your password reset code is {code}");
+            await _smsService.SendSmsAsync(PhoneNumber, $"Your password reset code is {code}");
 
-            return Ok(new { message = "Password reset code has been sent to your phone" ,PhoneNumber});
+            return Ok(new { message = "Password reset code has been sent to your phone", PhoneNumber });
         }
 
         [HttpPost("reset-password")]
@@ -73,7 +73,7 @@ namespace factoring1.Controllers
                 return BadRequest(new { message = "Invalid or expired code" });
             }
 
-            var user = await _context.Individus.FirstOrDefaultAsync(u => u.NumberPhone == model.PhoneNumber );
+            var user = await _context.Individus.FirstOrDefaultAsync(u => u.NumberPhone == model.PhoneNumber);
 
             if (user == null)
             {
@@ -125,7 +125,7 @@ namespace factoring1.Controllers
         {
             if (!ModelState.IsValid)
             {
-               return BadRequest(ModelState);
+                return BadRequest(ModelState);
             }
 
             var user = await _context.Individus.FirstOrDefaultAsync(u => u.Email == model.Email);
@@ -136,7 +136,7 @@ namespace factoring1.Controllers
             }
 
             var token = _authService.GenerateJwtToken(user);
-            return Ok(new { message = "Login successful", token ,user});
+            return Ok(new { message = "Login successful", token, user });
         }
 
         [HttpGet("protected")]

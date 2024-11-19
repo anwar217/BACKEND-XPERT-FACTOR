@@ -27,7 +27,8 @@ namespace factoring1.Repositories
         public async Task<IEnumerable<Limite>> GetLimitesByContratIdAsync(int contratId,int individuId)
         {
             return await _context.Limites
-                                 .Where(b => b.ContratId == contratId && b.Contrat.IndividuContrats.Any(ic => ic.IndividuId == individuId))
+                                 .Where(b => b.ContratId == contratId &&
+                                 b.Contrat.IndividuContrats.Any(ic => ic.IndividuId == individuId))
                 .ToListAsync();
         }
     }

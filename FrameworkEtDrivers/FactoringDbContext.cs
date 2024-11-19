@@ -63,6 +63,18 @@ namespace factoring1.FrameworkEtDrivers
                    v => v.ToString(),
                    v => (Limite.StatusLimit)Enum.Parse(typeof(Limite.StatusLimit), v));
 
+            modelBuilder.Entity<Litige>()
+              .Property(ic => ic.statut)
+              .HasConversion(
+                  v => v.ToString(),
+                  v => (Litige.StatusLitige)Enum.Parse(typeof(Litige.StatusLitige), v));
+
+            modelBuilder.Entity<Prorogation>()
+              .Property(ic => ic.statut)
+              .HasConversion(
+                  v => v.ToString(),
+                  v => (Prorogation.StatusProrogation)Enum.Parse(typeof(Prorogation.StatusProrogation), v));
+
             // Configure Facture relationships
             modelBuilder.Entity<Facture>()
                 .HasOne(f => f.Bordereau)

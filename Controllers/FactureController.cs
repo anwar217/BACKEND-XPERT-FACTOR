@@ -39,7 +39,7 @@ public class FactureController : ControllerBase
         {
             return Ok(emptyFacture);
         }
-
+       
         return Ok(factures);
     }
 
