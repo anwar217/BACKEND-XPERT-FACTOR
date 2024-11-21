@@ -1,17 +1,20 @@
 ﻿using factoring1.FrameworkEtDrivers;
 using factoring1.Models;
+using factoring1.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace factoring1.Services
 {
     public class LitigeService : ILitigeService
     {
         private readonly FactoringDbContext _context;
+        private readonly ILitigeRepository _litigeRepository;
 
-        public LitigeService(FactoringDbContext context)
+        public LitigeService(FactoringDbContext context, ILitigeRepository litigeRepository)
         {
             _context = context;
+            _litigeRepository = litigeRepository;
         }
-
         public async Task<Litige> AddLitigeAsync(int contratId, int factureId, Litige litige)
         {
             var contrat = await _context.Contrats.FindAsync(contratId);
@@ -33,5 +36,16 @@ namespace factoring1.Services
 
             return litige;
         }
+
+
+        public async Task<IEnumerable<Litige>> GetLitigesByFacture(int factureId)
+        {
+            var litiges = await _context.Litiges
+                .Where(l => l.FactureId == factureId )
+                .ToListAsync();
+
+            return litiges;
+        }
+
     }
 }

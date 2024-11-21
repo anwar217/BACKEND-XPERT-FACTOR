@@ -61,6 +61,32 @@ public class IndividuRepository : IIndividuRepository
         _context.Individus.Update(individu);
         return await _context.SaveChangesAsync() > 0;
     }
+    public async Task<Individu> AddIndividuAsync(Individu individu)
+    {
+        // Ajouter l'individu à la base de données
+        _context.Individus.Add(individu);
+        await _context.SaveChangesAsync(); // Sauvegarder les modifications
+
+        // Retourner l'individu créé
+        return individu;
+    }
+    public async Task<Individu> GetIndividuByIdAsync(int individuId)
+    {
+        return await _context.Individus
+                             .FirstOrDefaultAsync(i => i.IndividuId == individuId);
+    }
+    public async Task<List<Individu>> GetAllIndividus()
+    {
+        return await _context.Individus
+            .Include(i => i.IndividuContrats)
+                .ThenInclude(ic => ic.Contrat)
+                    .ThenInclude(c => c.Factures)
+            .Include(i => i.IndividuContrats)
+                .ThenInclude(ic => ic.Contrat)
+                   
+            .ToListAsync();
+    }
+
 
 
 }

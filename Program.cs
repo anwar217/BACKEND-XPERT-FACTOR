@@ -36,6 +36,10 @@ builder.Services.AddScoped<IFactureService, FactureService>();
 builder.Services.AddScoped<IDisponibleService, DisponibleService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddMemoryCache();
+builder.Services.AddScoped<CalculContrat>();
+builder.Services.AddScoped<LimitWithIndividu>(); // Register your service
+
+
 
 // Register SmsService
 builder.Services.AddSingleton<SmsService>(provider =>

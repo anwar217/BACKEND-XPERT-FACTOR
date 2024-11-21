@@ -13,16 +13,16 @@ namespace factoring1.Models
         public FormuleType Formule { get; set; }
 
         [Required]
-        public int FactureEnCours { get; set; }
+        public decimal FactureEnCours { get; set; }
 
         [Required]
-        public int FondsDeGaranties { get; set; }
+        public decimal FondsDeGaranties { get; set; }
 
         [Required]
         public int FondsDeReserve { get; set; }
 
         [Required]
-        public int DepassementLimiteFinancementAcheteurs { get; set; }
+        public decimal DepassementLimiteFinancementAcheteurs { get; set; }
          public int ContratId { get; set; }
         public Contrat? Contrat { get; set; }
     }

@@ -6,6 +6,8 @@ namespace factoring1.Repositories
     {
         Task<Limite> AddLimiteAsync(Limite limite);
         Task<Contrat> GetContratByIdAsync(int contratId);
+        Task<IEnumerable<Limite>> GetLimitesByContratIdAsync(int contratId, int individuId); // Nouvelle méthode
 
+         Task<decimal> GetLimitApprouvedSumByContratIdAsync(int contratId);
     }
 }

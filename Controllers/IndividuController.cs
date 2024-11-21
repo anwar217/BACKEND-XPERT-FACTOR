@@ -15,11 +15,13 @@ namespace factoring1.Controllers
     {
         private readonly IIndividuService _individuService;
         private readonly IIndividuContratService _individuContratService;
+        private readonly IIndividuRepository _individuRepository;
 
-        public IndividuController(IIndividuService individuService, IIndividuContratService individuContratService)
+        public IndividuController(IIndividuService individuService, IIndividuContratService individuContratService, IIndividuRepository individuRepository)
         {
             _individuService = individuService;
             _individuContratService = individuContratService;
+            _individuRepository = individuRepository;
         }
 
         [HttpGet("acheteurs/contrat/{contratId}")]
@@ -57,23 +59,23 @@ namespace factoring1.Controllers
             }
         }
 
-        [HttpPost("{contratId}/ajouter-acheteur")]
-        public async Task<IActionResult> AjouterAcheteurAuContrat(int contratId, int acheteurId)
+        [HttpPost("{contratId}/ajouter-acheteurs")]
+        public async Task<IActionResult> AjouterAcheteursAuContrat(int contratId, [FromBody] List<int> acheteurIds)
         {
             try
             {
                 // Récupérer l'ID de l'adhérent à partir du token JWT
                 var adherentId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")?.Value);
 
-                // Appeler le service pour ajouter un acheteur au contrat
-                var result = await _individuContratService.AjouterAcheteurAuContrat(adherentId, contratId, acheteurId);
+                // Appeler le service pour ajouter les acheteurs au contrat
+                var result = await _individuContratService.AjouterAcheteursAuContrat(adherentId, contratId, acheteurIds);
 
                 if (result)
                 {
-                    return Ok("Acheteur ajouté avec succès au contrat.");
+                    return Ok("Acheteurs ajoutés avec succès au contrat.");
                 }
 
-                return BadRequest("Erreur lors de l'ajout de l'acheteur.");
+                return BadRequest("Erreur lors de l'ajout des acheteurs.");
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -153,6 +155,44 @@ namespace factoring1.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateIndividu([FromBody] Individu individu)
+        {
+            if (individu == null)
+            {
+                return BadRequest("Individu is null.");
+            }
+
+            var result = await _individuService.CreateIndividuAsync(individu);
+            if (result != null)
+            {
+                return Ok(result); // Retourne l'individu créé avec un statut 200 OK
+            }
+            return BadRequest("Unable to add Individu."); // En cas d'erreur
+        }
+
+
+        [HttpGet("individus")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllIndividus()
+        {
+            var individus = await _individuService.GetAllIndividus();
+            return Ok(individus);
+        }
+
+        // Récupérer un individu spécifique avec ses relations
+        [HttpGet("individus/{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetIndividuById(int id)
+        {
+            var individu = await _individuRepository.GetIndividuByIdAsync(id);
+            if (individu == null)
+            {
+                return NotFound();
+            }
+            return Ok(individu);
         }
     }
 }

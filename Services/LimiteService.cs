@@ -23,5 +23,14 @@ namespace factoring1.Services
             limite.ContratId = contratId;
             return await _limiteRepository.AddLimiteAsync(limite);
         }
+        public async Task<IEnumerable<Limite>> GetLimitesByContratIdAsync(int contratId, int individuId)
+        {
+            return await _limiteRepository.GetLimitesByContratIdAsync(contratId,  individuId);
+        }
+
+        public async Task<decimal> GetLimitApprouvedSumByContratIdAsync(int contratId)
+        {
+            return await _limiteRepository.GetLimitApprouvedSumByContratIdAsync(contratId);
+        }
     }
 }

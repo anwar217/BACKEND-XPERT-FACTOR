@@ -45,6 +45,10 @@ namespace factoring1.Migrations
                     b.Property<int>("NombreDocuments")
                         .HasColumnType("int");
 
+                    b.Property<string>("Statut")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.HasKey("BordereauId");
 
                     b.HasIndex("ContratId");
@@ -67,6 +71,17 @@ namespace factoring1.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("DeviceContrat")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("FondGarantie")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("FraisCreation")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("FraisLimite")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -101,14 +116,14 @@ namespace factoring1.Migrations
                     b.Property<int>("ContratId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DepassementLimiteFinancementAcheteurs")
-                        .HasColumnType("int");
+                    b.Property<decimal>("DepassementLimiteFinancementAcheteurs")
+                        .HasColumnType("decimal(65,30)");
 
-                    b.Property<int>("FactureEnCours")
-                        .HasColumnType("int");
+                    b.Property<decimal>("FactureEnCours")
+                        .HasColumnType("decimal(65,30)");
 
-                    b.Property<int>("FondsDeGaranties")
-                        .HasColumnType("int");
+                    b.Property<decimal>("FondsDeGaranties")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<int>("FondsDeReserve")
                         .HasColumnType("int");
@@ -159,6 +174,10 @@ namespace factoring1.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.HasKey("FactureId");
 
                     b.HasIndex("BordereauId");
@@ -192,6 +211,10 @@ namespace factoring1.Migrations
                     b.Property<decimal>("MontantFinancement")
                         .HasColumnType("decimal(65,30)");
 
+                    b.Property<string>("StatutFinancement")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("TypeDeFinancement")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -214,6 +237,9 @@ namespace factoring1.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Nom")
                         .IsRequired()
@@ -266,13 +292,15 @@ namespace factoring1.Migrations
                     b.Property<int>("ContratId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateDemande")
+                    b.Property<DateTime?>("DateDemande")
+                        .IsRequired()
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime?>("DateDerniereDemande")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("DateLimite")
+                    b.Property<DateTime?>("DateLimite")
+                        .IsRequired()
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("DelaiDemande")
@@ -285,9 +313,12 @@ namespace factoring1.Migrations
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("ModePaiement")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -315,6 +346,10 @@ namespace factoring1.Migrations
 
                     b.Property<int>("FactureId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Statut")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("TypeDuLitige")
                         .IsRequired()
@@ -354,10 +389,9 @@ namespace factoring1.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("TypeProrogation")
+                    b.Property<string>("Statut")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("ProrogationId");
 

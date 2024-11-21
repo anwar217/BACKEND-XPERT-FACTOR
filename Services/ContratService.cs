@@ -2,18 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using factoring1.FrameworkEtDrivers;
 using factoring1.Models;
 using factoring1.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace factoring1.Services
 {
     public class ContratService : IContratService
     {
         private readonly IContratRepository _contratRepository;
+        private readonly IIndividuRepository _individuRepository;
+        private readonly FactoringDbContext _context;
 
-        public ContratService(IContratRepository contratRepository)
+
+        public ContratService(IContratRepository contratRepository,IIndividuRepository individuRepository, FactoringDbContext context)
         {
             _contratRepository = contratRepository;
+            _individuRepository = individuRepository;
+            _context = context;
         }
 
        
@@ -56,7 +63,40 @@ namespace factoring1.Services
 
             return contrat;
         }
+
+        public async Task<Contrat> AddContratToAdherentAsync(int individuId, Contrat contrat)
+        {
+            // Vérifier si l'individu existe
+            var individu = await _individuRepository.GetIndividuByIdAsync(individuId); // Vous devez implémenter cette méthode dans votre repository
+            if (individu == null)
+            {
+                throw new ArgumentException("Individu non trouvé.");
+            }
+
+            // Créer une association entre l'adhérent et le contrat
+            var individuContrat = new IndividuContrat
+            {
+                IndividuId = individuId,
+                ContratId = contrat.ContratId,
+                Role = IndividuContrat.RoleType.Adherent // Associer l'individu au rôle d'adhérent
+            };
+
+            // Ajouter le contrat à la base de données
+            _context.IndividuContrats.Add(individuContrat);
+            await _context.SaveChangesAsync();
+
+            return contrat; // Retourner le contrat créé
+        }
+        public async Task<List<Contrat>> GetAllContratsAsync()
+        {
+            return await _contratRepository.GetAllContratsAsync();
+        }
+        public async Task<Contrat> GetContratByIdAsync(int contratId)
+        {
+            return await _contratRepository.GetContratByIdAsync(contratId);
+        }
+
     }
 
-  
+
 }

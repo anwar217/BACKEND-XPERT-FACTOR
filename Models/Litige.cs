@@ -16,6 +16,8 @@ namespace factoring1.Models
 
         [Required]
         public DateTime DateLitige { get; set; }
+        [Required]
+        public StatusLitige Statut { get; set; }
 
         [Required]
         public DateTime DateEcheanceLitige { get; set; }
@@ -23,6 +25,12 @@ namespace factoring1.Models
         public Contrat? Contrat { get; set; }
         public int FactureId { get; set; }
         public Facture? Facture { get; set; }
+        public enum StatusLitige
+        {
+            Approuved,
+            Rejected,
+            Pending
+        }
     }
 
     }

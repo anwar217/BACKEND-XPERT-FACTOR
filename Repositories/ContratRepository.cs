@@ -37,5 +37,48 @@ namespace factoring1.Repositories
             return await _context.IndividuContrats
                 .AnyAsync(ic => ic.IndividuId == individuId && ic.ContratId == contratId && ic.Role == IndividuContrat.RoleType.Adherent);
         }
+
+        public async Task<Contrat> AddContratForIndividuAsync(int contratId, int individuId)
+        {
+            // Vérifier si le contrat existe
+            var existingContrat = await _context.Contrats
+                .FirstOrDefaultAsync(c => c.ContratId == contratId);
+            if (existingContrat == null)
+            {
+                throw new ArgumentException("Le contrat n'existe pas.");
+            }
+
+            // Créer une association entre l'adhérent et le contrat
+            var individuContrat = new IndividuContrat
+            {
+                IndividuId = individuId,
+                ContratId = contratId,
+                Role = IndividuContrat.RoleType.Adherent
+            };
+
+            // Ajouter l'association à la base de données
+            _context.IndividuContrats.Add(individuContrat);
+            await _context.SaveChangesAsync();
+
+            return existingContrat; // Retourner le contrat existant
+        }
+
+        public async Task<Contrat> GetContratByIdAsync(int contratId)
+        {
+            return await _context.Contrats.Where(c => c.ContratId == contratId).FirstOrDefaultAsync();
+        }
+        public async Task<List<Contrat>> GetAllContratsAsync()
+        {
+            return await _context.Contrats
+                .Include(c => c.IndividuContrats)
+                    .ThenInclude(ic => ic.Individu)
+                .Include(c => c.Factures)
+                .Include(c => c.Financements)
+                .Include(c => c.Limites)
+                .Include(c => c.Litiges)
+                .Include(c => c.Prorogations)
+                .ToListAsync();
+        }
     }
 }
+

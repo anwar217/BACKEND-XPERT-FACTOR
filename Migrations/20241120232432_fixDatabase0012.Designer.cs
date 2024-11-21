@@ -12,8 +12,8 @@ using factoring1.FrameworkEtDrivers;
 namespace factoring1.Migrations
 {
     [DbContext(typeof(FactoringDbContext))]
-    [Migration("20240724201544_ProrogationModel")]
-    partial class ProrogationModel
+    [Migration("20241120232432_fixDatabase0012")]
+    partial class fixDatabase0012
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,6 +48,10 @@ namespace factoring1.Migrations
                     b.Property<int>("NombreDocuments")
                         .HasColumnType("int");
 
+                    b.Property<string>("Statut")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.HasKey("BordereauId");
 
                     b.HasIndex("ContratId");
@@ -63,6 +67,27 @@ namespace factoring1.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ContratId"));
 
+                    b.Property<DateTime>("DateDebContrat")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DateSignContrat")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("DeviceContrat")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("FondGarantie")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("FraisCreation")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("FraisLimite")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<decimal>("MontantContrat")
                         .HasColumnType("decimal(65,30)");
 
@@ -70,9 +95,50 @@ namespace factoring1.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("StatutContrat")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TypeContrat")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.HasKey("ContratId");
 
                     b.ToTable("Contrats");
+                });
+
+            modelBuilder.Entity("factoring1.Models.Disponible", b =>
+                {
+                    b.Property<int>("DisponibleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("DisponibleId"));
+
+                    b.Property<int>("ContratId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("DepassementLimiteFinancementAcheteurs")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("FactureEnCours")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("FondsDeGaranties")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<int>("FondsDeReserve")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Formule")
+                        .HasColumnType("int");
+
+                    b.HasKey("DisponibleId");
+
+                    b.HasIndex("ContratId");
+
+                    b.ToTable("Disponibles");
                 });
 
             modelBuilder.Entity("factoring1.Models.Facture", b =>
@@ -111,6 +177,10 @@ namespace factoring1.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.HasKey("FactureId");
 
                     b.HasIndex("BordereauId");
@@ -144,6 +214,10 @@ namespace factoring1.Migrations
                     b.Property<decimal>("MontantFinancement")
                         .HasColumnType("decimal(65,30)");
 
+                    b.Property<string>("StatutFinancement")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("TypeDeFinancement")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -167,7 +241,18 @@ namespace factoring1.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NumberPhone")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -199,6 +284,52 @@ namespace factoring1.Migrations
                     b.ToTable("IndividuContrats");
                 });
 
+            modelBuilder.Entity("factoring1.Models.Limite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ContratId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DateDemande")
+                        .IsRequired()
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("DateDerniereDemande")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("DateLimite")
+                        .IsRequired()
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("DelaiDemande")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("LimiteAssurance")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("LimiteFinancement")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("ModePaiement")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContratId");
+
+                    b.ToTable("Limites");
+                });
+
             modelBuilder.Entity("factoring1.Models.Litige", b =>
                 {
                     b.Property<int>("LitigeId")
@@ -218,6 +349,10 @@ namespace factoring1.Migrations
 
                     b.Property<int>("FactureId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Statut")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("TypeDuLitige")
                         .IsRequired()
@@ -257,10 +392,9 @@ namespace factoring1.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("TypeProrogation")
+                    b.Property<string>("Statut")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("ProrogationId");
 
@@ -275,6 +409,17 @@ namespace factoring1.Migrations
                 {
                     b.HasOne("factoring1.Models.Contrat", "Contrat")
                         .WithMany("Bordereaux")
+                        .HasForeignKey("ContratId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contrat");
+                });
+
+            modelBuilder.Entity("factoring1.Models.Disponible", b =>
+                {
+                    b.HasOne("factoring1.Models.Contrat", "Contrat")
+                        .WithMany("Disponibles")
                         .HasForeignKey("ContratId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -339,6 +484,17 @@ namespace factoring1.Migrations
                     b.Navigation("Individu");
                 });
 
+            modelBuilder.Entity("factoring1.Models.Limite", b =>
+                {
+                    b.HasOne("factoring1.Models.Contrat", "Contrat")
+                        .WithMany("Limites")
+                        .HasForeignKey("ContratId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contrat");
+                });
+
             modelBuilder.Entity("factoring1.Models.Litige", b =>
                 {
                     b.HasOne("factoring1.Models.Contrat", "Contrat")
@@ -386,11 +542,15 @@ namespace factoring1.Migrations
                 {
                     b.Navigation("Bordereaux");
 
+                    b.Navigation("Disponibles");
+
                     b.Navigation("Factures");
 
                     b.Navigation("Financements");
 
                     b.Navigation("IndividuContrats");
+
+                    b.Navigation("Limites");
 
                     b.Navigation("Litiges");
 

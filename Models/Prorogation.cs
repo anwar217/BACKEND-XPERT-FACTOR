@@ -9,14 +9,14 @@ namespace factoring1.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProrogationId { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string TypeProrogation { get; set; }
+      
 
         [Required]
         public DateTime Echeance { get; set; }
 
         public string MotifProrogation { get; set; }
+        [Required]
+        public StatusProrogation Statut { get; set; }
 
         [Required]
         public DateTime DateEcheanceApresProrogation { get; set; }
@@ -24,5 +24,11 @@ namespace factoring1.Models
         public Contrat? Contrat { get; set; }
         public int FactureId { get; set; }
         public Facture? Facture { get; set; }
+        public enum StatusProrogation
+        {
+            Approuved,
+            Rejected,
+            Pending
+        }
     }
 }

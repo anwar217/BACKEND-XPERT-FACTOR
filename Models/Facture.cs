@@ -9,7 +9,7 @@ namespace factoring1.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FactureId { get; set; }
-
+         public FactureStatus Status { get; set; }
         [Required]
         public decimal MontantDocument { get; set; }
 
@@ -19,6 +19,7 @@ namespace factoring1.Models
 
         [Required]
         public int Echeance { get; set; }
+       
 
         [Required]
         public DateTime DateFacture { get; set; }
@@ -38,5 +39,9 @@ namespace factoring1.Models
         public Contrat? Contrat { get; set; }
         public List<Litige>? Litiges { get; set; } = new List<Litige>();
         public List<Prorogation>? Prorogations { get; set; } = new List<Prorogation>();
+        public enum FactureStatus{
+            paid,
+            inProgress,
+        }
     }
 }

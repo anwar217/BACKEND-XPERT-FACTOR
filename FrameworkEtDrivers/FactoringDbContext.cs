@@ -51,6 +51,35 @@ namespace factoring1.FrameworkEtDrivers
                 .WithMany(c => c.Bordereaux)
                 .HasForeignKey(b => b.ContratId);
 
+            modelBuilder.Entity<Bordereau>()
+              .Property(ic => ic.Statut)
+              .HasConversion(
+                  v => v.ToString(),
+                  v => (Bordereau.StatusBordereau)Enum.Parse(typeof(Bordereau.StatusBordereau), v));
+
+            modelBuilder.Entity<Limite>()
+               .Property(ic => ic.Status)
+               .HasConversion(
+                   v => v.ToString(),
+                   v => (Limite.StatusLimit)Enum.Parse(typeof(Limite.StatusLimit), v));
+
+            modelBuilder.Entity<Litige>()
+              .Property(ic => ic.Statut)
+              .HasConversion(
+                  v => v.ToString(),
+                  v => (Litige.StatusLitige)Enum.Parse(typeof(Litige.StatusLitige), v));
+
+            modelBuilder.Entity<Prorogation>()
+              .Property(ic => ic.Statut)
+              .HasConversion(
+                  v => v.ToString(),
+                  v => (Prorogation.StatusProrogation)Enum.Parse(typeof(Prorogation.StatusProrogation), v));
+            modelBuilder.Entity<Facture>()
+              .Property(ic => ic.Status)
+              .HasConversion(
+                  v => v.ToString(),
+                  v => (Facture.FactureStatus)Enum.Parse(typeof(Facture.FactureStatus), v));
+
             // Configure Facture relationships
             modelBuilder.Entity<Facture>()
                 .HasOne(f => f.Bordereau)
@@ -86,6 +115,17 @@ namespace factoring1.FrameworkEtDrivers
              .HasConversion(
                  v => v.ToString(),
                  v => (TypeDeFinancement)Enum.Parse(typeof(TypeDeFinancement), v));
+
+       
+            modelBuilder.Entity<Financement>()
+      .Property(f => f.StatutFinancement)
+      .HasConversion(
+          v => v.ToString(),
+          v => (StatutFinancement)Enum.Parse(typeof(StatutFinancement), v)
+      );
+
+
+
 
             modelBuilder.Entity<Litige>()
                .HasOne(l => l.Contrat)

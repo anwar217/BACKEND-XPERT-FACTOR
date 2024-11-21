@@ -28,8 +28,8 @@ namespace factoring1.Controllers
             // Vérifier que le montant total du bordereau est égal à la somme des montants des factures
             var totalFactures = bordereau.Factures.Sum(f => f.MontantDocument);
             Console.WriteLine("totalFactures");
-             Console.WriteLine(totalFactures);
-            if (bordereau.MontantTotal != Math.Floor(totalFactures) )
+            Console.WriteLine(totalFactures);
+            if (bordereau.MontantTotal != Math.Floor(totalFactures))
             {
                 return BadRequest("Le montant total du bordereau doit être égal à la somme des montants des factures.");
             }
@@ -58,6 +58,37 @@ namespace factoring1.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("contrat/{contratId}")]
+        public async Task<IActionResult> GetBordereauxByContratId(int contratId)
+        {
+            // Récupération de l'IndividuId depuis le token JWT
+            try
+            {
+                var individuIdClaim = User.FindFirst("id");
+                if (individuIdClaim == null)
+                {
+                    return Unauthorized("IndividuId not found in token.");
+                }
+
+                int individuId = int.Parse(individuIdClaim.Value);
+
+                // Appel du service pour récupérer les bordereaux pour cet utilisateur et ce contrat
+                var bordereaux = await _bordereauService.GetBordereauxByContratAndIndividuAsync(contratId, individuId);
+
+                if (bordereaux == null || bordereaux.Count == 0)
+                {
+                    return NotFound($"Aucun bordereau trouvé pour le contrat ID {contratId} et l'utilisateur connecté.");
+                }
+
+                return Ok(bordereaux);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
             }
         }
     }

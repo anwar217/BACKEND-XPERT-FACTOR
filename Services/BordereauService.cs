@@ -29,5 +29,14 @@ namespace factoring1.Services
 
             return await _bordereauRepository.AddBordereauAsync(bordereau);
         }
+        public async Task<List<Bordereau>> GetBordereauxByContratAndIndividuAsync(int contratId, int individuId)
+        {
+            return await _bordereauRepository.GetBordereauxByContratAndIndividuAsync(contratId, individuId);
+        }
+
+        public async Task<decimal> GetBordereauApprouvedSumByContratIdAsync(int contratId)
+        {
+            return await _bordereauRepository.GetBordereauApprouvedSumByContratIdAsync(contratId);
+        }
     }
 }

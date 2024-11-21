@@ -1,5 +1,6 @@
 ﻿using factoring1.FrameworkEtDrivers;
 using factoring1.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace factoring1.Repositories
 {
@@ -18,5 +19,9 @@ namespace factoring1.Repositories
             await _context.SaveChangesAsync();
             return litige;
         }
+
+       
+
+
     }
 }

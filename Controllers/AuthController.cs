@@ -8,6 +8,7 @@ using factoring1.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Memory;
 using factoring1.Services;
+using System.Runtime.ConstrainedExecution;
 
 
 namespace factoring1.Controllers
@@ -31,8 +32,12 @@ namespace factoring1.Controllers
 
         [HttpPost("request-password-reset")]
         public async Task<IActionResult> RequestPasswordReset([FromBody] PasswordResetRequestModel model)
+
         {
-            var user = await _context.Individus.FirstOrDefaultAsync(u => u.NumberPhone == model.PhoneNumber);
+            var PhoneNumber = model.PhoneNumber.Substring(model.PhoneNumber.Length - 8);
+            var universalPhoneNumber1 = "+216" + PhoneNumber;
+            var universalPhoneNumber2 = "00216" + PhoneNumber;
+            var user = await _context.Individus.FirstOrDefaultAsync(u => u.NumberPhone == PhoneNumber || u.NumberPhone == universalPhoneNumber1 || u.NumberPhone == universalPhoneNumber2);
 
             if (user == null)
             {
@@ -47,10 +52,10 @@ namespace factoring1.Controllers
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
             });
 
-            // Envoyer le code par SMS
-            await _smsService.SendSmsAsync(user.NumberPhone, $"Your password reset code is {code}");
+            PhoneNumber = "+216" + PhoneNumber;
+            await _smsService.SendSmsAsync(PhoneNumber, $"Your password reset code is {code}");
 
-            return Ok(new { message = "Password reset code has been sent to your phone" });
+            return Ok(new { message = "Password reset code has been sent to your phone", PhoneNumber });
         }
 
         [HttpPost("reset-password")]
@@ -120,7 +125,7 @@ namespace factoring1.Controllers
         {
             if (!ModelState.IsValid)
             {
-               return BadRequest(ModelState);
+                return BadRequest(ModelState);
             }
 
             var user = await _context.Individus.FirstOrDefaultAsync(u => u.Email == model.Email);
@@ -131,7 +136,7 @@ namespace factoring1.Controllers
             }
 
             var token = _authService.GenerateJwtToken(user);
-            return Ok(new { message = "Login successful", token ,user});
+            return Ok(new { message = "Login successful", token, user });
         }
 
         [HttpGet("protected")]

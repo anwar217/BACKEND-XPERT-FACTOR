@@ -10,27 +10,35 @@ namespace factoring1.Models
         public int Id { get; set; }
 
         [Required]
-        public DateTime DateDemande { get; set; }
+        public DateTime? DateDemande { get; set; }
 
         [Required]
         public decimal LimiteAssurance { get; set; }
 
         [Required]
         public decimal LimiteFinancement { get; set; }
+        [Required]
+        public StatusLimit Status { get; set; }
 
         [Required]
-        public DateTime DateLimite { get; set; }
+        public DateTime? DateLimite { get; set; }
 
         public DateTime? DateDerniereDemande { get; set; }
 
         [Required]
         public int DelaiDemande { get; set; }
 
-        [Required]
+
         [StringLength(100)]
-        public string ModePaiement { get; set; }
+        public  string? ModePaiement { get; set; }
         public int ContratId { get; set; }
         public Contrat? Contrat { get; set; }
+        public enum StatusLimit
+        {
+            Approuved,
+            Rejected,
+            Pending
+        }
 
     }
 }

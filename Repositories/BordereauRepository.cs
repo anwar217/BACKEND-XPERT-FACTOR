@@ -20,8 +20,17 @@ namespace factoring1.Repositories
             await _context.SaveChangesAsync();
             return bordereau;
         }
+
         public async Task<decimal>GetBordereauApprouvedSumByContratIdAsync(int contratId){
-            return await _context.Bordereaux.Where(b => b.ContratId == contratId && b. == Bordereau.StatusBordereau.approuved).SumAsync(b => b.MontantTotal);
+            return await _context.Bordereaux.Where(b => b.ContratId == contratId && b.Statut == Bordereau.StatusBordereau.Approuved).SumAsync(b => b.MontantTotal);
+
+}
+        public async Task<List<Bordereau>> GetBordereauxByContratAndIndividuAsync(int contratId, int individuId)
+        {
+            return await _context.Bordereaux
+                .Where(b => b.ContratId == contratId && b.Contrat.IndividuContrats.Any(ic => ic.IndividuId == individuId))
+                .ToListAsync();
         }
+
     }
 }

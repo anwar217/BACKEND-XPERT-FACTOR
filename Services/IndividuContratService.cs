@@ -20,7 +20,7 @@ namespace factoring1.Services
             return individuContrat?.Role == IndividuContrat.RoleType.Adherent;
         }
 
-        public async Task<bool> AjouterAcheteurAuContrat(int adherentId, int contratId, int acheteurId)
+        public async Task<bool> AjouterAcheteursAuContrat(int adherentId, int contratId, List<int> acheteurIds)
         {
             // Vérifier si l'adhérent est le propriétaire du contrat
             var estProprietaire = await _individuContratRepository.EstProprietaireDuContrat(adherentId, contratId);
@@ -30,25 +30,28 @@ namespace factoring1.Services
                 throw new UnauthorizedAccessException("Vous n'êtes pas autorisé à modifier ce contrat.");
             }
 
-            // Vérifier si l'acheteur est déjà assigné au contrat
-            var acheteurDejaPresent = await _individuContratRepository.AcheteurDejaPresent(contratId, acheteurId);
-            if (acheteurDejaPresent)
+            // Pour chaque acheteur, vérifier s'il est déjà présent et l'ajouter s'il ne l'est pas
+            foreach (var acheteurId in acheteurIds)
             {
-                // Acheteur déjà présent, lancer une exception
-                throw new InvalidOperationException("Cet acheteur est déjà assigné à ce contrat.");
+                var acheteurDejaPresent = await _individuContratRepository.AcheteurDejaPresent(contratId, acheteurId);
+                if (acheteurDejaPresent)
+                {
+                    throw new InvalidOperationException($"L'acheteur avec ID {acheteurId} est déjà assigné à ce contrat.");
+                }
+
+                // Ajouter chaque acheteur au contrat
+                var nouvelAcheteur = new IndividuContrat
+                {
+                    ContratId = contratId,
+                    IndividuId = acheteurId,
+                    Role = RoleType.Acheteur
+                };
+
+                await _individuContratRepository.AjouterIndividuContrat(nouvelAcheteur);
             }
-
-            // Ajouter l'acheteur au contrat
-            var nouvelAcheteur = new IndividuContrat
-            {
-                ContratId = contratId,
-                IndividuId = acheteurId,
-                Role = RoleType.Acheteur
-            };
-
-            await _individuContratRepository.AjouterIndividuContrat(nouvelAcheteur);
 
             return true;
         }
+
     }
 }

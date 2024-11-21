@@ -23,20 +23,21 @@ namespace factoring1.Repositories
 
         public async Task<bool> EstProprietaireDuContrat(int adherentId, int contratId)
         {
+            // Vérifier si l'adhérent est bien le propriétaire du contrat
             return await _context.IndividuContrats
-                .AnyAsync(ic => ic.IndividuId == adherentId && ic.ContratId == contratId && ic.Role == RoleType.Adherent);
+                .AnyAsync(ic => ic.ContratId == contratId && ic.IndividuId == adherentId && ic.Role == RoleType.Adherent);
         }
 
-        // Vérifier si l'acheteur est déjà présent pour ce contrat
         public async Task<bool> AcheteurDejaPresent(int contratId, int acheteurId)
         {
+            // Vérifier si l'acheteur est déjà assigné au contrat
             return await _context.IndividuContrats
                 .AnyAsync(ic => ic.ContratId == contratId && ic.IndividuId == acheteurId && ic.Role == RoleType.Acheteur);
         }
 
-        // Ajouter un individu avec un rôle dans un contrat
         public async Task AjouterIndividuContrat(IndividuContrat individuContrat)
         {
+            // Ajouter un nouvel acheteur au contrat
             _context.IndividuContrats.Add(individuContrat);
             await _context.SaveChangesAsync();
         }

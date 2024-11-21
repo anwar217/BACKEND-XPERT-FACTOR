@@ -32,13 +32,40 @@ public class FactureController : ControllerBase
     [HttpGet("GetFacturesByAcheteur/{contratId}/{acheteurId}")]
     public async Task<IActionResult> GetFacturesByAcheteur(int contratId, int acheteurId)
     {
+        var emptyFacture = Array.Empty<Facture>();
         var factures = await _factureService.GetFacturesByAcheteurAndContratIdAsync(contratId, acheteurId);
 
         if (factures == null || !factures.Any())
         {
-            return NotFound();
+            return Ok(emptyFacture);
         }
-
+       
         return Ok(factures);
     }
+
+    [HttpGet("{contratId}/{bordereauId}")]
+    public async Task<IActionResult> GetFacturesByContratBordereauIndividu(int contratId, int bordereauId)
+    {
+        // Obtenir l'ID de l'individu connecté depuis le token JWT
+        var individuIdClaim = User.FindFirst("id");
+        if (individuIdClaim == null)
+        {
+            return Unauthorized("IndividuId non trouvé dans le token.");
+        }
+
+        int individuId = int.Parse(individuIdClaim.Value);
+
+        // Appeler le service pour récupérer les factures
+        var factures = await _factureService.GetFacturesByBorderau(contratId, bordereauId, individuId);
+
+        // Vérifier si des factures ont été trouvées
+        if (factures == null || !factures.Any())
+        {
+            return NotFound("Aucune facture trouvée pour ce contrat, bordereau et individu.");
+        }
+
+        // Retourner les factures
+        return Ok(factures);
+    }
+
 }

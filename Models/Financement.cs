@@ -12,6 +12,14 @@ namespace factoring1.Models
         Financement,
         LiberationFDG
     }
+  
+    [JsonConverter(typeof(StatutFinancementConverter))] // Utilisation du convertisseur personnalisé
+    public enum StatutFinancement
+    {
+        Approved, // Correction du nom
+        Rejected,
+        Pending
+    }
 
     public class Financement
     {
@@ -29,6 +37,10 @@ namespace factoring1.Models
         [Required]
         public DateTime DateDeFinancement { get; set; }
 
+       
+        [Required]
+        public StatutFinancement StatutFinancement { get; set; }
+
         [Required]
         [StringLength(100)]
         public string MethodeDePaiement { get; set; }
@@ -37,7 +49,6 @@ namespace factoring1.Models
         public Contrat? Contrat { get; set; }
     }
 
-    // Convertisseur JSON pour l'énumération TypeDeFinancement
     public class TypeDeFinancementConverter : JsonConverter<TypeDeFinancement>
     {
         public override TypeDeFinancement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -52,6 +63,27 @@ namespace factoring1.Models
         }
 
         public override void Write(Utf8JsonWriter writer, TypeDeFinancement value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value.ToString());
+        }
+    }
+
+   
+    public class StatutFinancementConverter : JsonConverter<StatutFinancement>
+    {
+        public override StatutFinancement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            string value = reader.GetString();
+            return value switch
+            {
+                "Approved" => StatutFinancement.Approved, // Correction du nom
+                "Rejected" => StatutFinancement.Rejected,
+                "Pending" => StatutFinancement.Pending,
+                _ => throw new JsonException($"Unable to convert \"{value}\" to {nameof(StatutFinancement)}")
+            };
+        }
+
+        public override void Write(Utf8JsonWriter writer, StatutFinancement value, JsonSerializerOptions options)
         {
             writer.WriteStringValue(value.ToString());
         }

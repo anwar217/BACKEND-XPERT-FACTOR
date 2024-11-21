@@ -29,5 +29,24 @@ namespace factoring1.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("facture/{factureId}")]
+        public async Task<IActionResult> GetProrogationByFacture(int factureId)
+        {
+            var individuIdClaim = User.FindFirst("id");
+            if (individuIdClaim == null)
+            {
+                return Unauthorized("IndividuId not found in token.");
+            }
+
+            int individuId = int.Parse(individuIdClaim.Value);
+
+            var limites = await _prorogationService.GetProrogationByFacture(factureId);
+            if (limites == null)
+            {
+                return NotFound($"Aucun litige trouvé pour la facture ID {factureId} et l'utilisateur connecté.");
+            }
+            return Ok(limites);
+        }
     }
 }

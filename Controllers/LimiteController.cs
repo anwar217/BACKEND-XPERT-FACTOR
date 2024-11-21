@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics.Contracts;
+using System.Threading.Tasks;
+using factoring1.DTO;
 using factoring1.Models;
 using factoring1.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +12,16 @@ namespace factoring1.Controllers
     public class LimiteController : ControllerBase
     {
         private readonly ILimiteService _limiteService;
-
-        public LimiteController(ILimiteService limiteService)
+        private readonly LimitWithIndividu _limitWithIndividuService;
+        public LimiteController(ILimiteService limiteService,LimitWithIndividu limitWithIndividu)
         {
             _limiteService = limiteService;
+            _limitWithIndividuService= limitWithIndividu;
+
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddLimite(int contratId, Limite limite)
+        [HttpPost("{contratId}")]
+        public async Task<IActionResult> AddLimite(int contratId, [FromBody] Limite limite)
         {
             try
             {
@@ -28,6 +32,37 @@ namespace factoring1.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet("contrat/{contratId}")]
+        public async Task<IActionResult> GetLimitesByContratId(int contratId)
+        {
+            var individuIdClaim = User.FindFirst("id");
+            if (individuIdClaim == null)
+            {
+                return Unauthorized("IndividuId not found in token.");
+            }
+
+            int individuId = int.Parse(individuIdClaim.Value);
+
+            var limites = await _limiteService.GetLimitesByContratIdAsync(contratId, individuId);
+            if (limites == null)
+            {
+                return NotFound($"Aucun limite trouvé pour le contrat ID {contratId} et l'utilisateur connecté.");
+            }
+            return Ok(limites);
+        }
+        [HttpGet("acheteur/{contratId}")]
+        public async Task<ActionResult<List<AcheteurWithPendingLimiteCount>>> GetAcheteursWithPendingLimitsByContratId(int contratId)
+        {
+            var acheteursWithPendingLimits = await _limitWithIndividuService.GetAdherentsWithLimiteCountByContratIdAsync(contratId);
+
+            if (acheteursWithPendingLimits == null || acheteursWithPendingLimits.Count == 0)
+            {
+                return NotFound("No acheteurs found for the specified contrat or no pending limits.");
+            }
+
+            return Ok(acheteursWithPendingLimits);
         }
     }
 }

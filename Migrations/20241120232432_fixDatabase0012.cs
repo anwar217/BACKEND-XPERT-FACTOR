@@ -5,20 +5,13 @@
 namespace factoring1.Migrations
 {
     /// <inheritdoc />
-    public partial class adminddd : Migration
+    public partial class fixDatabase0012 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Statut",
-                table: "Factures",
-                type: "longtext",
-                nullable: false)
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.AlterColumn<decimal>(
-                name: "FactureEnCours",
+                name: "DepassementLimiteFinancementAcheteurs",
                 table: "Disponibles",
                 type: "decimal(65,30)",
                 nullable: false,
@@ -29,12 +22,8 @@ namespace factoring1.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Statut",
-                table: "Factures");
-
             migrationBuilder.AlterColumn<int>(
-                name: "FactureEnCours",
+                name: "DepassementLimiteFinancementAcheteurs",
                 table: "Disponibles",
                 type: "int",
                 nullable: false,
