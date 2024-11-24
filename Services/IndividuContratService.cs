@@ -1,4 +1,5 @@
-﻿using factoring1.Models;
+﻿using factoring1.DTO;
+using factoring1.Models;
 using factoring1.Repositories;
 using System.Threading.Tasks;
 using static factoring1.Models.IndividuContrat;
@@ -52,6 +53,8 @@ namespace factoring1.Services
 
             return true;
         }
+
+     
 
     }
 }

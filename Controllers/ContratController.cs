@@ -4,28 +4,22 @@ using Microsoft.AspNetCore.Mvc;
 using factoring1.Services;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using factoring1.Models;
+using factoring1.Repositories;
 
 namespace factoring1.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
- [Authorize] 
-    public class ContratController : ControllerBase
+ //[Authorize] 
+    public class ContratController(IContratService contratService, CalculContrat calculContrat, IFactureService factureService, IBordereauService bordereauService, ILimiteService limiteService, IContratRepository contratRepository) : ControllerBase
     {
-        private readonly IContratService _contratService;
-        private readonly CalculContrat _calculContrat;
-        private readonly IFactureService _factureService;
-        private readonly IBordereauService _bordereauService;
-        private readonly ILimiteService _limiteService;
-
-        public ContratController(IContratService contratService,CalculContrat calculContrat,IFactureService factureService,IBordereauService bordereauService,ILimiteService limiteService)
-        {
-            _contratService = contratService;
-            _calculContrat = calculContrat;
-            _factureService = factureService;
-            _bordereauService = bordereauService;
-            _limiteService = limiteService;
-        }
+        private readonly IContratService _contratService = contratService;
+        private readonly CalculContrat _calculContrat = calculContrat;
+        private readonly IFactureService _factureService = factureService;
+        private readonly IBordereauService _bordereauService = bordereauService;
+        private readonly ILimiteService _limiteService = limiteService;
+        private readonly IContratRepository  _contratRepository = contratRepository;
 
         [HttpGet("adherents/contrats")]
         public async Task<IActionResult> GetContratsAdherents()
@@ -69,13 +63,13 @@ namespace factoring1.Controllers
                 return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
             }
         }
-       /* [HttpGet("contrats")]
-        [Authorize(Roles = "Admin")]
+        [HttpGet("contrats")]
+      //  [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllContrats()
         {
             var contrats = await _contratService.GetAllContratsAsync();
             return Ok(contrats);
-        }*/
+        }
 
         [HttpGet("montant/{contratId}")]
         public async Task<IActionResult> GetMontantTotalApprouve(int contratId)
@@ -96,6 +90,37 @@ namespace factoring1.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = "Erreur lors du calcul du montant total approuvé", Erreur = ex.Message });
+            }
+        }
+        [HttpPost("contrat/new")]
+        public async Task<IActionResult> Create([FromBody] Contrat contrat){
+            Console.WriteLine(contrat);
+            try
+            {
+                  var newContrat = await _contratRepository.CreateContratAsync(contrat);
+                return Ok(newContrat);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+                throw;
+            
+                return BadRequest("Error creating contrat");
+            }
+          
+        }
+        [HttpGet("admin/{contratId}")]
+        public async Task<IActionResult> GetContratAdminById(int contratId){
+            try {
+                var contrat = await _contratService.GetContratAdminByIdAsync(contratId);
+         
+            return Ok(contrat);
+            }
+          
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
             }
         }
     }

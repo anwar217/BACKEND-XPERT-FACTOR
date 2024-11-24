@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using factoring1.DTO;
 using factoring1.Models;
 using factoring1.Repositories;
 namespace factoring1.Services;
@@ -50,5 +51,10 @@ public class IndividuService : IIndividuService
     {
         return await _individuRepository.GetAllIndividus();
     }
-
+   public async  Task<List<AdherentContratMontantCount>> GetAllAdherents(){
+        return await _individuRepository.GetAllAdherents();
+     }
+     public async Task<List<AcheteurFactureSumWithStatus>> GetAllAcheteurs(){
+        return await _individuRepository.GetAllAcheteurs();
+     }
 }

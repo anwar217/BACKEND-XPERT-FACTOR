@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using factoring1.DTO;
 using factoring1.FrameworkEtDrivers;
 using factoring1.Models;
 using Microsoft.EntityFrameworkCore;
@@ -88,5 +89,30 @@ public class IndividuRepository : IIndividuRepository
     }
 
 
-
+   public async Task<List<AdherentContratMontantCount>> GetAllAdherents(){
+  
+return await _context.IndividuContrats
+    .Where(ic => ic.Role == IndividuContrat.RoleType.Adherent)
+    .GroupBy(ic => ic.Individu)
+    .Select(g => new AdherentContratMontantCount
+    {
+        Adherent = g.Key,
+        ContratMontantCount = g.Sum(ic => ic.Contrat.MontantContrat),
+    })
+    .ToListAsync();
+    } 
+    public async Task<List<AcheteurFactureSumWithStatus>> GetAllAcheteurs(){
+  
+return await _context.IndividuContrats
+    .Where(ic => ic.Role == IndividuContrat.RoleType.Acheteur)
+    .GroupBy(ic => ic.Individu)
+    .Select(g => new AcheteurFactureSumWithStatus
+    {
+        Acheteur = g.Key,
+        FacturePaidSum = g.Sum(ic => ic.Individu.Factures.Where(f => f.Status == Facture.FactureStatus.paid).Sum(f => f.MontantDocument)),
+        FactureInProgressSum = g.Sum(ic => ic.Individu.Factures.Where(f => f.Status == Facture.FactureStatus.inProgress).Sum(f => f.MontantDocument)),
+    })
+    .ToListAsync();
+    }
 }
+

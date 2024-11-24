@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using factoring1.Models;
 using factoring1.Services;
 using Microsoft.AspNetCore.Authorization;
+using factoring1.DTO;
 
 namespace factoring1.Controllers
 {
@@ -184,7 +185,7 @@ namespace factoring1.Controllers
 
         // Récupérer un individu spécifique avec ses relations
         [HttpGet("individus/{id}")]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetIndividuById(int id)
         {
             var individu = await _individuRepository.GetIndividuByIdAsync(id);
@@ -193,6 +194,14 @@ namespace factoring1.Controllers
                 return NotFound();
             }
             return Ok(individu);
+        }
+        [HttpGet("admin/Adherents")]
+        public async  Task<List<AdherentContratMontantCount>> GetAllAdherents(){
+            return await _individuService.GetAllAdherents();
+        }
+        [HttpGet("admin/Acheteurs")]
+        public async  Task<List<AcheteurFactureSumWithStatus>> GetAllAcheteurs(){
+            return await _individuService.GetAllAcheteurs();
         }
     }
 }

@@ -12,5 +12,6 @@ namespace factoring1.Services
         Task<Contrat> AddContratToAdherentAsync(int individuId, Contrat contrat);
         Task<List<Contrat>> GetAllContratsAsync();
         Task<Contrat> GetContratByIdAsync(int contratId);
+        Task<Contrat> GetContratAdminByIdAsync(int contratId);
     }
 }

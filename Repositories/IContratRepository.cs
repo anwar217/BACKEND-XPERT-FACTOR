@@ -13,6 +13,8 @@ namespace factoring1.Repositories
         Task<Contrat> AddContratForIndividuAsync(int contratId, int individuId);
         Task<List<Contrat>> GetAllContratsAsync();
         Task<Contrat> GetContratByIdAsync(int contratId);
+        Task<Contrat> CreateContratAsync(Contrat contrat);
+        Task<Contrat> GetContratAdminByIdAsync(int contratId);
 
     }
 }

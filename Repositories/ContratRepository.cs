@@ -69,15 +69,28 @@ namespace factoring1.Repositories
         }
         public async Task<List<Contrat>> GetAllContratsAsync()
         {
+            return await _context.Contrats.ToListAsync();
+               
+           
+             
+        }
+        public async Task<Contrat> CreateContratAsync(Contrat contrat){
+          await  _context.Contrats.AddAsync(contrat);
+         var result =   await _context.SaveChangesAsync();
+            return contrat;
+        }
+
+        public async Task<Contrat>GetContratAdminByIdAsync(int contratId)
+        {
             return await _context.Contrats
-                .Include(c => c.IndividuContrats)
-                    .ThenInclude(ic => ic.Individu)
-                .Include(c => c.Factures)
-                .Include(c => c.Financements)
-                .Include(c => c.Limites)
-                .Include(c => c.Litiges)
-                .Include(c => c.Prorogations)
-                .ToListAsync();
+ 
+    .Where(c => c.ContratId == contratId)
+    .Include(c => c.Bordereaux)
+    .Include(c => c.Financements)
+    .Include(c => c.Limites)
+    .Include(c => c.IndividuContrats.
+    Where(ic => ic.Role == IndividuContrat.RoleType.Adherent)).ThenInclude(ic => ic.Individu)
+    .FirstOrDefaultAsync();
         }
     }
 }

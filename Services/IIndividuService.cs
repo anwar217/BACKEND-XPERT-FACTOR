@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using factoring1.DTO;
 using factoring1.Models;
 namespace factoring1.Services;
 public interface IIndividuService
@@ -12,6 +13,8 @@ public interface IIndividuService
     Task<Individu> CreateIndividuAsync(Individu individu);
     Task<List<Individu>> GetAllIndividus();
 
+ Task<List<AdherentContratMontantCount>> GetAllAdherents();
 
+ Task<List<AcheteurFactureSumWithStatus>> GetAllAcheteurs();
 
 }

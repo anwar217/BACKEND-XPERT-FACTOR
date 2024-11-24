@@ -95,7 +95,12 @@ namespace factoring1.Services
         {
             return await _contratRepository.GetContratByIdAsync(contratId);
         }
+        public async Task<Contrat> GetContratAdminByIdAsync(int contratId)
+        {
+            return await _contratRepository.GetContratAdminByIdAsync(contratId);
+        }
 
+       
     }
 
 

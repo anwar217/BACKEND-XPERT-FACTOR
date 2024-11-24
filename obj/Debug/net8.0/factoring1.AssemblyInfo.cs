@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("factoring1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d8fdebb1286c61dc3bc339f5d7cddb470bac2e0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23d31da14e1ecb8d4057f61aa0842b8ac6b97aa4")]
 [assembly: System.Reflection.AssemblyProductAttribute("factoring1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("factoring1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
