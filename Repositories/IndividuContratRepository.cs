@@ -41,5 +41,10 @@ namespace factoring1.Repositories
             _context.IndividuContrats.Add(individuContrat);
             await _context.SaveChangesAsync();
         }
+        public async Task LinkContractToAdherent(int contractId, int adherentId){
+            var  individuContrat =new IndividuContrat {IndividuId= adherentId, ContratId= contractId, Role = RoleType.Adherent };
+             _context.IndividuContrats.Add(individuContrat);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -176,7 +176,7 @@ namespace factoring1.Controllers
 
 
         [HttpGet("individus")]
-        [Authorize(Roles = "Admin")]
+      //  [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllIndividus()
         {
             var individus = await _individuService.GetAllIndividus();

@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using factoring1.Models;
 using factoring1.Repositories;
+using factoring1.DTO;
 
 namespace factoring1.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
  //[Authorize] 
-    public class ContratController(IContratService contratService, CalculContrat calculContrat, IFactureService factureService, IBordereauService bordereauService, ILimiteService limiteService, IContratRepository contratRepository) : ControllerBase
+    public class ContratController(IContratService contratService, CalculContrat calculContrat, IFactureService factureService, IBordereauService bordereauService, ILimiteService limiteService, IContratRepository contratRepository,IIndividuContratService individuContratService) : ControllerBase
     {
         private readonly IContratService _contratService = contratService;
         private readonly CalculContrat _calculContrat = calculContrat;
@@ -20,6 +21,7 @@ namespace factoring1.Controllers
         private readonly IBordereauService _bordereauService = bordereauService;
         private readonly ILimiteService _limiteService = limiteService;
         private readonly IContratRepository  _contratRepository = contratRepository;
+        private readonly IIndividuContratService _individuContratService = individuContratService;
 
         [HttpGet("adherents/contrats")]
         public async Task<IActionResult> GetContratsAdherents()
@@ -123,5 +125,17 @@ namespace factoring1.Controllers
                 return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
             }
         }
+        [HttpPost("admin/linkContratToAdherent")]
+        public async Task<IActionResult> LinkContratToAdherent([FromBody] ContractLinkCredencials data){
+            try {
+                var contrat = await _individuContratService.LinkContractToAdherent(data.ContratId,data.AdherentId);
+                return Ok(contrat);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
+            }
+        }
     }
+
 }

@@ -35,5 +35,11 @@ namespace factoring1.Services
         public async Task<decimal> GetFacturesApprouvedByContratIdAsync(int contratId){
             return await _factureRepository.GetFacturesApprouvedByContratIdAsync(contratId);
         }
+        public async Task<Facture> GetFacturesWithLitigesAsync(int factureId){
+            return await _factureRepository.GetFacturesWithLitigesAsync(factureId);
+        }
+        public async Task<Facture> GetFacturesWithProrogationsAsync(int factureId){
+            return await _factureRepository.GetFacturesWithProrogationsAsync(factureId);
+        }
     }
 }

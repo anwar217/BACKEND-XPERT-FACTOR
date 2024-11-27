@@ -72,6 +72,14 @@ namespace factoring1.Services
         {
             return await _context.Factures.Where(f => f.ContratId == contratId && (f.Status == Facture.FactureStatus.inProgress|| f.Status == Facture.FactureStatus.paid)).SumAsync(f => f.MontantDocument);
         }
+        public async Task<Facture> GetFacturesWithLitigesAsync(int factureId)
+        {
+            return await _context.Factures.Include(f => f.Litiges).FirstOrDefaultAsync(f => f.FactureId == factureId);
+        }
+        public async Task<Facture> GetFacturesWithProrogationsAsync(int factureId)
+        {
+            return await _context.Factures.Include(f => f.Prorogations).FirstOrDefaultAsync(f => f.FactureId == factureId);
+        }
 
     }
   

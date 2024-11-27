@@ -1,4 +1,5 @@
-﻿using factoring1.Models;
+﻿using factoring1.DTO;
+using factoring1.Models;
 
 namespace factoring1.Services
 {
@@ -6,6 +7,6 @@ namespace factoring1.Services
     {
         Task<Litige> AddLitigeAsync(int contratId, int factureId, Litige litige);
         Task<IEnumerable<Litige>> GetLitigesByFacture(int factureId);
-
+        Task <Litige> ValidateLitigeAsync(LitigeValidateCredencials credencials);
     }
 }

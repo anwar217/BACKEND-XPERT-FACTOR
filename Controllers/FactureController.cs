@@ -67,5 +67,17 @@ public class FactureController : ControllerBase
         // Retourner les factures
         return Ok(factures);
     }
+    [HttpGet("litiges/{factureId}")]
+    public async Task<IActionResult> GetFacturesLitiges(int factureId)
+    {
+        var factures = await _factureService.GetFacturesWithLitigesAsync(factureId);
+        return Ok(factures);
+    }
+    [HttpGet("prorogations/{factureId}")]
+    public async Task<IActionResult> GetFacturesProrogations(int factureId)
+    {
+        var factures = await _factureService.GetFacturesWithProrogationsAsync(factureId);
+        return Ok(factures);
+    }
 
 }

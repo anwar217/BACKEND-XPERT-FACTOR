@@ -1,4 +1,5 @@
-﻿using factoring1.Models;
+﻿using factoring1.DTO;
+using factoring1.Models;
 
 namespace factoring1.Services
 {
@@ -7,6 +8,6 @@ namespace factoring1.Services
         Task<Limite> AddLimiteAsync(int contratId, Limite limite);
         Task<IEnumerable<Limite>> GetLimitesByContratIdAsync(int contratId, int individuId); // Nouvelle méthode
         Task<decimal> GetLimitApprouvedSumByContratIdAsync(int contratId);
-
+        Task<Limite> ValidateLimiteAsync(LimiteValidateCredencials credencials);
     }
 }

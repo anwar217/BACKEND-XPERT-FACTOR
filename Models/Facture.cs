@@ -9,7 +9,7 @@ namespace factoring1.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FactureId { get; set; }
-         public FactureStatus Status { get; set; }
+         public FactureStatus Status { get; set; }= FactureStatus.pending;
         [Required]
         public decimal MontantDocument { get; set; }
 
@@ -42,6 +42,7 @@ namespace factoring1.Models
         public enum FactureStatus{
             paid,
             inProgress,
+            pending,
         }
     }
 }

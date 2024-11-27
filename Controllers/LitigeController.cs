@@ -1,4 +1,5 @@
 ﻿using AutoMapper.Features;
+using factoring1.DTO;
 using factoring1.Models;
 using factoring1.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -52,6 +53,19 @@ namespace factoring1.Controllers
                 return NotFound($"Aucun litige trouvé pour la facture ID {factureId} et l'utilisateur connecté.");
             }
             return Ok(limites);
+        }
+        [HttpPost("admin/validate")]
+        public async Task<IActionResult> ValidateLitige([FromBody] LitigeValidateCredencials credencials)
+        {
+            try
+            {
+                await _litigeService.ValidateLitigeAsync(credencials);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
+            }
         }
     }
    }

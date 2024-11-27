@@ -64,5 +64,18 @@ namespace factoring1.Controllers
 
             return Ok(acheteursWithPendingLimits);
         }
+        [HttpPost("admin/validate")]
+        public async Task<IActionResult> ValidateLimite([FromBody] LimiteValidateCredencials credencials)
+        {
+            try
+            {
+                await _limiteService.ValidateLimiteAsync(credencials);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using factoring1.DTO;
 using factoring1.FrameworkEtDrivers;
 using factoring1.Models;
 using factoring1.Repositories;
@@ -54,6 +55,27 @@ namespace factoring1.Services
                 .ToListAsync();
 
             return financements;
+        }
+        public async Task <Financement> ValidateFinancementAsync(FinancementValidateCredencials credencials){
+            var financement = await _context.Financements
+                .Where(f =>f.FinancementId == credencials.FinancementId)
+                .FirstOrDefaultAsync();
+
+            if (financement != null)
+            {
+                if (credencials.Action == "refuse")
+                {
+                    financement.StatutFinancement = StatutFinancement.Rejected;
+                }
+                if (credencials.Action == "accept")
+                {
+                    financement.StatutFinancement = StatutFinancement.Approved;
+                }
+                _context.Financements.Update(financement);
+                await _context.SaveChangesAsync();
+                return financement;
+            }
+            return financement;
         }
     }
 }

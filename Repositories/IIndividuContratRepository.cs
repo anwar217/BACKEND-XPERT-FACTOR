@@ -9,5 +9,6 @@ namespace factoring1.Repositories
         Task<bool> EstProprietaireDuContrat(int adherentId, int contratId);
         Task<bool> AcheteurDejaPresent(int contratId, int acheteurId);
         Task AjouterIndividuContrat(IndividuContrat individuContrat);
+        Task LinkContractToAdherent(int contractId, int adherentId);
     }
 }

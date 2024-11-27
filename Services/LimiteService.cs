@@ -1,4 +1,5 @@
-﻿using factoring1.Models;
+﻿using factoring1.DTO;
+using factoring1.Models;
 using factoring1.Repositories;
 
 namespace factoring1.Services
@@ -31,6 +32,9 @@ namespace factoring1.Services
         public async Task<decimal> GetLimitApprouvedSumByContratIdAsync(int contratId)
         {
             return await _limiteRepository.GetLimitApprouvedSumByContratIdAsync(contratId);
+        }
+        public async Task<Limite> ValidateLimiteAsync(LimiteValidateCredencials credencials){
+            return await _limiteRepository.ValidateLimiteAsync(credencials);
         }
     }
 }

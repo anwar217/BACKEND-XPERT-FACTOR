@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using factoring1.DTO;
 using factoring1.FrameworkEtDrivers;
 using factoring1.Models;
 using factoring1.Repositories;
@@ -38,6 +39,25 @@ namespace factoring1.Services
                 .ToListAsync();
 
             return litiges;
+        }
+        public async Task<Prorogation> ValidateProrogationAsync(ProrogationValidatiteCredencials credencials){
+
+            var prorogation = await _context.Prorogations.FirstOrDefaultAsync(l => l.ProrogationId == credencials.ProrogationId );
+
+            if (prorogation != null)
+            {
+                if(credencials.Action=="refuse")
+                {
+                    prorogation.Statut = Prorogation.StatusProrogation.Rejected;
+                }
+                if(credencials.Action=="accept")
+                {
+                    prorogation.Statut = Prorogation.StatusProrogation.Approuved;
+                }
+                _context.Prorogations.Update(prorogation);
+                await _context.SaveChangesAsync();
+            }
+            return prorogation;
         }
     }
     

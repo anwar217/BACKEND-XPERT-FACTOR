@@ -1,4 +1,5 @@
-﻿using factoring1.FrameworkEtDrivers;
+﻿using factoring1.DTO;
+using factoring1.FrameworkEtDrivers;
 using factoring1.Models;
 using factoring1.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +46,10 @@ namespace factoring1.Services
                 .ToListAsync();
 
             return litiges;
+        }
+        public async Task<Litige>ValidateLitigeAsync(LitigeValidateCredencials credencials){
+            var litige = await _litigeRepository.ValidateLitigeAsync(credencials) ?? throw new ArgumentException("Le litige n'existe pas.");
+            return litige;
         }
 
     }

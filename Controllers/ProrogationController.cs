@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using factoring1.DTO;
 using factoring1.Models;
 using factoring1.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,19 @@ namespace factoring1.Controllers
                 return NotFound($"Aucun litige trouvé pour la facture ID {factureId} et l'utilisateur connecté.");
             }
             return Ok(limites);
+        }
+        [HttpPost("Admin/validate")]
+        public async Task<IActionResult> ValidateProrogation(ProrogationValidatiteCredencials credencials)
+        {
+            try
+            {
+                var prorogation = await _prorogationService.ValidateProrogationAsync(credencials);
+                return Ok(prorogation);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

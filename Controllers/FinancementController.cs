@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using factoring1.Models;
 using factoring1.Services;
 using System.Text.Json.Serialization;
+using factoring1.DTO;
 
 namespace factoring1.Controllers
 {
@@ -66,6 +67,20 @@ namespace factoring1.Controllers
                 }
 
                 return Ok(financements);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
+            }
+        }
+        [HttpPost("admin/validate")]
+
+        public async Task<IActionResult> ValidateFinancement([FromBody] FinancementValidateCredencials credencials)
+        {
+            try
+            {
+                await _financementService.ValidateFinancementAsync(credencials);
+                return Ok();
             }
             catch (Exception ex)
             {

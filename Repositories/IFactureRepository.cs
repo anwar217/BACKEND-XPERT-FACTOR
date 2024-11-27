@@ -11,6 +11,7 @@ namespace factoring1.Repositories
         Task<List<Facture>> GetFacturesByBordereau(int contratId, int bordereauId,int individuId);
         Task<decimal> GetFactureEnCoursByContratIdAsync(int contratId);
         Task<decimal> GetFacturesApprouvedByContratIdAsync(int contratId);
-
+        Task<Facture> GetFacturesWithLitigesAsync(int factureId);
+        Task<Facture> GetFacturesWithProrogationsAsync(int factureId);
     }
 }

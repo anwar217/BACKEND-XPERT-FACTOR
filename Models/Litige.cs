@@ -12,7 +12,7 @@ namespace factoring1.Models
 
         [Required]
         [StringLength(100)]
-        public string TypeDuLitige { get; set; }
+        public required string TypeDuLitige { get; set; }
 
         [Required]
         public DateTime DateLitige { get; set; }

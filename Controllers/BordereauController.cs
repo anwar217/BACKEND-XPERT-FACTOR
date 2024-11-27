@@ -1,4 +1,5 @@
-﻿using factoring1.Models;
+﻿using factoring1.DTO;
+using factoring1.Models;
 using factoring1.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -85,6 +86,24 @@ namespace factoring1.Controllers
 
                 return Ok(bordereaux);
 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
+            }
+        }
+        [HttpGet("factures/{bordereauId}")]
+        public async Task<IActionResult> GetBordereauxwithFactures(int bordereauId){
+            var bordereaux = await _bordereauService.GetBordereauxWithFactures(bordereauId);
+            return Ok(bordereaux);
+        }
+        [HttpPost("admin/validate")]
+        public async Task<IActionResult> ValidateBordereau([FromBody] BordereauValidateCredencials credencials)
+        {
+            try
+            {
+                await _bordereauService.ValidateBordereauAsync(credencials);
+                return Ok();
             }
             catch (Exception ex)
             {

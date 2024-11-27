@@ -53,6 +53,11 @@ namespace factoring1.Services
 
             return true;
         }
+        public async Task<bool> LinkContractToAdherent(int contractId, int adherentId)
+        {
+            await _individuContratRepository.LinkContractToAdherent(contractId, adherentId);
+            return true;
+        }
 
      
 

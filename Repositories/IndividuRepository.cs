@@ -79,11 +79,7 @@ public class IndividuRepository : IIndividuRepository
     public async Task<List<Individu>> GetAllIndividus()
     {
         return await _context.Individus
-            .Include(i => i.IndividuContrats)
-                .ThenInclude(ic => ic.Contrat)
-                    .ThenInclude(c => c.Factures)
-            .Include(i => i.IndividuContrats)
-                .ThenInclude(ic => ic.Contrat)
+         
                    
             .ToListAsync();
     }

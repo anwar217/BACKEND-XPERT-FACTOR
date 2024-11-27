@@ -1,4 +1,5 @@
-﻿using factoring1.Models;
+﻿using factoring1.DTO;
+using factoring1.Models;
 using factoring1.Repositories;
 using System.Threading.Tasks;
 
@@ -37,6 +38,14 @@ namespace factoring1.Services
         public async Task<decimal> GetBordereauApprouvedSumByContratIdAsync(int contratId)
         {
             return await _bordereauRepository.GetBordereauApprouvedSumByContratIdAsync(contratId);
+        }
+        public async Task<Bordereau> GetBordereauxWithFactures(int bordereauId){
+            return await _bordereauRepository.GetBordereauWithFactures(bordereauId);
+        }
+
+      public async Task ValidateBordereauAsync(BordereauValidateCredencials credencials)
+        {
+            var bordereau = await _bordereauRepository.ValidateBordereauAsync(credencials) ?? throw new ArgumentException("Le bordereau n'existe pas.");
         }
     }
 }
