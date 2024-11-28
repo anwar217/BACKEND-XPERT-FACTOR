@@ -39,7 +39,7 @@ namespace factoring1.Models
 
        
         [Required]
-        public StatutFinancement StatutFinancement { get; set; }
+        public StatutFinancement StatutFinancement { get; set; }=StatutFinancement.Pending;
 
         [Required]
         [StringLength(100)]

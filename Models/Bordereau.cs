@@ -17,7 +17,7 @@ namespace factoring1.Models
         [Required]
         public DateTime DateBordereau { get; set; }
         [Required]
-        public StatusBordereau Statut { get; set; }
+        public StatusBordereau Statut { get; set; }=StatusBordereau.Pending;
 
         [Required]
         public int NombreDocuments { get; set; }

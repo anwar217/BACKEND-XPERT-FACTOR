@@ -22,7 +22,7 @@ public async Task<List<AcheteurWithPendingLimiteCount>> GetAdherentsWithLimiteCo
         {
             // Get the total limit count for the contract
             var totalLimitCount = await _dbContext.Limites
-                .Where(l => l.ContratId == contratId)
+                .Where(l => l.ContratId == contratId&&l.Status==Limite.StatusLimit.Pending)
                 .CountAsync();
 
             // Get adherents and attach the count

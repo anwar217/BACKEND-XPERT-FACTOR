@@ -57,7 +57,7 @@ namespace factoring1.Services
         {
             // Vérifier si l'individu possède bien le contrat spécifié
             var factures = await _context.Factures
-          .Where(f => f.ContratId == contratId && f.BordereauId == bordereauId && f.IndividuId == individuId)
+          .Where(f => f.ContratId == contratId && f.BordereauId == bordereauId)
           .ToListAsync();
 
             return factures;

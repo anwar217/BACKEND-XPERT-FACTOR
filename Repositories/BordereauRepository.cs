@@ -33,10 +33,9 @@ namespace factoring1.Repositories
                 .ToListAsync();
         }
         public  async Task<Bordereau> GetBordereauWithFactures(int bordereauId){
-           
-                return await _context.Bordereaux.Where(b => b.BordereauId == bordereauId)
-                    .Include(b => b.Factures).ThenInclude(f => f.Individu)
-                    .FirstOrDefaultAsync();
+                  _context.ChangeTracker.LazyLoadingEnabled = false;
+                return await _context.Bordereaux.Include(b => b.Factures).ThenInclude(f => f.Individu)
+                    .FirstOrDefaultAsync(b => b.BordereauId == bordereauId);
             
         }
         public async Task<Bordereau> ValidateBordereauAsync(BordereauValidateCredencials credencials){

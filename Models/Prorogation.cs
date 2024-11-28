@@ -16,7 +16,7 @@ namespace factoring1.Models
 
         public string MotifProrogation { get; set; }
         [Required]
-        public StatusProrogation Statut { get; set; }
+        public StatusProrogation Statut { get; set; }=StatusProrogation.Pending;
 
         [Required]
         public DateTime DateEcheanceApresProrogation { get; set; }

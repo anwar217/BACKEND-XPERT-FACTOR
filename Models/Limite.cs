@@ -18,7 +18,7 @@ namespace factoring1.Models
         [Required]
         public decimal LimiteFinancement { get; set; }
         [Required]
-        public StatusLimit Status { get; set; }
+        public StatusLimit Status { get; set; }= StatusLimit.Pending;
 
         [Required]
         public DateTime? DateLimite { get; set; }
